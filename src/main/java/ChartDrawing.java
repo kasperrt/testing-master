@@ -25,21 +25,24 @@ public class ChartDrawing extends Application {
 
     @Override public void start(Stage stage) {
 
-        String type = "one-month";
-        String csvFile = "1524560402370.csv";
+        String filePrefix = "1524737197304";
+        String type = "" + filePrefix;
+
+        String csvFile = filePrefix + ".csv";
         BufferedReader br = null;
-        String line = "";
+        String line;
+        String csvSplitByFirst = "@";
         String cvsSplitBy = ",";
 
 
         try {
 
-            br = new BufferedReader(new FileReader(csvFile));
-            int i = 0;
+            br = new BufferedReader(new FileReader("runs/valid/" + csvFile));
             while ((line = br.readLine()) != null) {
 
                 // use comma as separator
-                String[] data = line.split(cvsSplitBy);
+                String[] data = line.split(csvSplitByFirst);
+                if(data.length < 2) data = line.split(cvsSplitBy);
                 String user = data[0];
                 long epochTime = Long.parseLong(data[1]);
                 long responseTime = Long.parseLong(data[2]);
@@ -50,7 +53,6 @@ public class ChartDrawing extends Application {
                     System.out.println("new endpoint to add - " + endpoint);
                     endpoints.put(endpoint, new HashMap<>());
                 }
-                HashMap thisEndpoint = endpoints.get(endpoint);
                 if(!endpoints.get(endpoint).containsKey(user)) {
                     System.out.println("new user in endpoint " + endpoint + " - " + user);
                     HashMap userXYMap = new HashMap();
@@ -163,8 +165,8 @@ public class ChartDrawing extends Application {
             endpoint = endpoint.substring(1);
 
             stage.setScene(scene);
-            saveAsPng(scene, endpoint.replace("/", "-") + "-" + type + ".png");
-            stage.show();
+            saveAsPng(scene, "graph/" + endpoint.replace("/", "-") + "-" + type + ".png");
+            //stage.show();
         }
         //System.exit(1);
     }

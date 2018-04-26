@@ -37,7 +37,7 @@ public class TestClass {
     private String createUserValues = "{ \"construct_next\": 26, \"p02_q01\": { \"value\": \"55\" }, \"p02_q02\": { \"value\": \"0\" }, \"p02_q03\": { \"value\": \"180\" }, \"construct_p02_q03_ft\": { \"value\": \"\" }, \"construct_p02_q03_in\": { \"value\": \"\" }, \"p02_q04\": { \"value\": \"80\" }, \"construct_p02_q04_st\": { \"value\": \"\" }, \"construct_p02_q04_lb\": { \"value\": \"\" }, \"construct_p02_typeUnits\": { \"value\": \"SI\" }, \"p03_q01\": { \"value\": \"0\" }, \"p03_q02\": { \"value\": 0 }, \"p03_q03\": { \"value\": 0 }, \"p03_q04\": { \"value\": \"1\" }, \"p03_q05\": { \"value\": \"1\" }, \"p03_q06\": { \"value\": 0 }, \"p03_q07\": { \"value\": 0 }, \"p04_q1\": { \"value\": \"18\", \"describe\": \"Norwegian\" }, \"p05_q01\": { \"value\": \"1\" }, \"p06_q01\": { \"value\": \"0\" }, \"p08_q01\": { \"value\": \"3\" }, \"p08_q02\": { \"value\": \"8\" }, \"p09_q01\": { \"value\": \"3\" }, \"p10_q01\": { \"value\": \"4\" }, \"p11_q01\": { \"value\": \"0\" }, \"p11_q02\": { \"value\": \"1\" }, \"p12_q01\": { \"value\": \"0\" }, \"p13_q01\": { \"value\": \"1\" }, \"p13_q02\": { \"value\": \"0\" }, \"p13_q03\": { \"value\": \"1\" }, \"p13_q04\": { \"value\": \"0\" }, \"p13_q05\": { \"value\": \"1\" }, \"p13_q06\": { \"value\": \"0\" }, \"p13_q07\": { \"value\": \"1\" }, \"p13_q08\": { \"value\": \"0\" }, \"p13_q09\": { \"value\": \"1\" }, \"p13_q10\": { \"value\": \"0\" }, \"p13_q11\": { \"value\": \"1\" }, \"p13_q12\": { \"value\": \"0\" }, \"p13_q13\": { \"value\": \"1\" }, \"p13_q14\": { \"value\": \"0\" }, \"p13_q15\": { \"value\": \"1\" }, \"p13_q16\": { \"value\": \"0\" }, \"p13_q17\": { \"value\": \"1\" }, \"p13_q18\": { \"value\": \"0\" }, \"p13_q19\": { \"value\": \"1\" }, \"p13_q20\": { \"value\": \"0\" }, \"p13_q21\": { \"value\": \"1\" }, \"p13_q22\": { \"value\": \"0\" }, \"p13_q23\": { \"value\": \"1\" }, \"p13_q24\": { \"value\": \"0\" }, \"p14_q01\": { \"value\": \"5\" }, \"p15_q01\": { \"value\": \"1\" }, \"p16_q01\": { \"value\": \"0\" }, \"p16_q02\": { \"value\": \"1\" }, \"p16_q03\": { \"value\": \"2\" }, \"p16_q04\": { \"value\": \"3\" }, \"p16_q05\": { \"value\": \"4\" }, \"p17_q01\": { \"value\": \"0\" }, \"p17_q02\": { \"value\": \"1\" }, \"p17_q03\": { \"value\": \"2\" }, \"p17_q04\": { \"value\": \"3\" }, \"p17_q05\": { \"value\": \"4\" }, \"p17_q06\": { \"value\": \"5\" }, \"p17_q07\": { \"value\": \"6\" }, \"p17_q08\": { \"value\": \"0\" }, \"p17_q09\": { \"value\": \"1\" }, \"p17_q10\": { \"value\": \"2\" }, \"p18_q01\": { \"value\": \"0\" }, \"p18_q02\": { \"value\": \"1\" }, \"p18_q03\": { \"value\": \"2\" }, \"p18_q04\": { \"value\": \"3\" }, \"p18_q05\": { \"value\": \"4\" }, \"p18_q06\": { \"value\": \"5\" }, \"p18_q07\": { \"value\": \"6\" }, \"p18_q08\": { \"value\": \"7\" }, \"p07_q01\": { \"value\": \"0\" }, \"p19_q01\": { \"value\": \"Gaming\", \"scale\": \"3\" }, \"p19_q02\": { \"value\": \"Eating\", \"scale\": \"5\" }, \"p20_q01\": { \"value\": \"1\" }, \"p20_q02\": { \"value\": 0 }, \"p20_q03\": { \"value\": 0 }, \"p20_q04\": { \"value\": \"1\" }, \"p20_q05\": { \"value\": 0 }, \"p20_q06\": { \"value\": 0 }, \"p20_q07\": { \"value\": 0 }, \"p20_q08\": { \"value\": \"1\" }, \"p20_q09\": { \"value\": 0 }, \"p21_q01\": { \"value\": 0 }, \"p21_q02\": { \"value\": 0 }, \"p21_q03\": { \"value\": 0 }, \"p21_q04\": { \"value\": 0 }, \"p21_q05\": { \"value\": 0 }, \"p21_q06\": { \"value\": 0 }, \"p21_q07\": { \"value\": 0 }, \"p21_q08\": { \"value\": 0 }, \"p21_q09\": { \"value\": 0 }, \"p21_q10\": { \"value\": 0 }, \"p21_q11\": { \"value\": 0 }, \"p21_q12\": { \"value\": 0 }, \"p21_q13\": { \"value\": 0 }, \"p21_q14\": { \"value\": 0 }, \"p21_q15\": { \"value\": 0 }, \"p21_q16\": { \"value\": 0 }, \"p21_q17\": { \"value\": \"Hello World!\" }, \"p21_q18\": { \"value\": \"\" }, \"p22_q01\": { \"value\": \"0\" }, \"p22_q02\": { \"value\": \"1\" }, \"p22_q03\": { \"value\": \"2\" }, \"p22_q04\": { \"value\": \"3\" }, \"p22_q05\": { \"value\": \"4\" }, \"p23_q01\": { \"value\": \"52\" }, \"p24_q01\": { \"value\": \"0\" }, \"p24_q02\": { \"value\": \"1\" }, \"p24_q03\": { \"value\": \"2\" }, \"p24_q04\": { \"value\": \"0\" }, \"p25_q01\": { \"value\": \"0\" }, \"p25_q02\": { \"value\": \"1\" }, \"p25_q03\": { \"value\": \"2\" }, \"p25_q04\": { \"value\": \"3\" }, \"p25_q05\": { \"value\": \"4\" }, \"p25_q06\": { \"value\": \"0\" }, \"p25_q07\": { \"value\": \"1\" }, \"p25_q08\": { \"value\": \"2\" }, \"p25_q09\": { \"value\": \"3\" }, \"p25_q10\": { \"value\": \"4\" }, \"p26_q01\": { \"value\": \"0\" }, \"p26_q02\": { \"value\": \"1\" }, \"p26_q03\": { \"value\": \"2\" }, \"p26_q04\": { \"value\": \"3\" }, \"p26_q05\": { \"value\": \"0\" }, \"p26_q06\": { \"value\": \"1\" }, \"p26_q07\": { \"value\": \"2\" }, \"p26_q08\": { \"value\": \"3\" } }";
     private final boolean DEBUG = true;
     private String writer;
-    private int maxWeekOffset = 4;
+    private int maxWeekOffset = 3;
 
     /**
      * Paths
@@ -135,9 +135,9 @@ public class TestClass {
             HttpsURLConnection connection = getConnection("GET", tailoringPath, false, true, false);
 
             boolean wait = false;
-            String returnString = getResponse(connection, wait, false);
+            String returnString = getResponse(connection, wait, false, "", tailoringPath);
             Date end = new Date();
-            printTook((wait ? end.getTime() - 1005 : end.getTime()) - start.getTime(), tailoringPath);
+            printTook((wait ? end.getTime() - 1005 : end.getTime()) - start.getTime(), tailoringPath, returnString);
             JSONArray tailoringObject = new JSONArray(returnString.toString());
             print("getTailoring here 8 " + returnString.toString());
             print("crash here 1?");
@@ -229,9 +229,9 @@ public class TestClass {
             connection.setRequestProperty( "Content-Type", "application/json");
             writeInRequest(connection, sendString);
             boolean wait = true;
-            String jsonString = getResponse(connection, wait, false);
+            String jsonString = getResponse(connection, wait, false, sendString, planNextPath);
             Date end = new Date();
-            printTook((wait ? end.getTime() - 1005 : end.getTime()) - start.getTime(), planNextPath);
+            printTook((wait ? end.getTime() - 1005 : end.getTime()) - start.getTime(), planNextPath, jsonString);
             JSONObject jsonObj = new JSONObject(jsonString);
 
             // Calculating performance of all exercises for this week
@@ -326,11 +326,21 @@ public class TestClass {
         postRequest(getConnection("POST", educationPath, true, true, false), educationPlan.toString(), educationPath);
     }
 
-    private void printTook(long tookTime, String path) {
-        String toWrite = username + "," + (new Date()).getTime() + "," + tookTime + "" + "," + path;
+    private void printError(String request, String path, String response) {
+        try {
+            final Path filePath = Paths.get("runs/errors/errors-" + writer);
+            Files.write(filePath, Arrays.asList(username + "@" + request + "@" + path + "@" + response), StandardCharsets.UTF_8,
+                    Files.exists(filePath) ? StandardOpenOption.APPEND : StandardOpenOption.CREATE);
+        } catch (final IOException ioe) {
+            // Add your own exception handling...
+        }
+    }
+
+    private void printTook(long tookTime, String path, String response) {
+        String toWrite = username + "@" + (new Date()).getTime() + "@" + tookTime + "@" + path + "@" + response;
         print(toWrite);
         try {
-            final Path filePath = Paths.get(writer);
+            final Path filePath = Paths.get("runs/valid/" + writer);
             Files.write(filePath, Arrays.asList(toWrite), StandardCharsets.UTF_8,
                     Files.exists(filePath) ? StandardOpenOption.APPEND : StandardOpenOption.CREATE);
         } catch (final IOException ioe) {
@@ -346,9 +356,9 @@ public class TestClass {
         writeInRequest(connection, s);
 
         boolean wait = true;
-        String jsonString = getResponse(connection, wait, true);
+        String jsonString = getResponse(connection, wait, true, s, path);
         Date end = new Date();
-        printTook((wait ? end.getTime() - 1005 : end.getTime()) - start.getTime(), path);
+        printTook((wait ? end.getTime() - 1005 : end.getTime()) - start.getTime(), path, jsonString);
     }
 
     private void postActivity(long start, long end, long steps, String type) {
@@ -373,9 +383,9 @@ public class TestClass {
         Date start = new Date();
         HttpsURLConnection connection = getConnection("GET", achievementsPath, false, true, false);
         boolean wait = false;
-        String returnString = getResponse(connection, wait, false);
+        String returnString = getResponse(connection, wait, false, "", achievementsPath);
         Date end = new Date();
-        printTook((wait ? end.getTime() - 1005 : end.getTime()) - start.getTime(), achievementsPath);
+        printTook((wait ? end.getTime() - 1005 : end.getTime()) - start.getTime(), achievementsPath, returnString);
     }
 
     private void postExercises() {
@@ -413,9 +423,9 @@ public class TestClass {
         HttpsURLConnection connection = getConnection("GET", resetPath, false, true, false);
 
         boolean wait = false;
-        String jsonString = getResponse(connection, wait, false);
+        String jsonString = getResponse(connection, wait, false, "", resetPath);
         Date end = new Date();
-        printTook((wait ? end.getTime() - 1005 : end.getTime()) - start.getTime(), resetPath);
+        printTook((wait ? end.getTime() - 1005 : end.getTime()) - start.getTime(), resetPath, jsonString);
     }
 
     private void getAccessToken() {
@@ -437,14 +447,14 @@ public class TestClass {
             }
 
             boolean wait = true;
-            String jsonString = getResponse(connection, wait, false);
+            String jsonString = getResponse(connection, wait, false, "", "oauthPath");
 
             JSONObject jsonObj = new JSONObject(jsonString);
             accessToken = jsonObj.getString("access_token");
             tokenType = jsonObj.getString("token_type");
             tokenType = tokenType.substring(0, 1).toUpperCase() + tokenType.substring(1);
             Date end = new Date();
-            printTook((wait ? end.getTime() - 1005 : end.getTime()) - start.getTime(), oauthPath);
+            printTook((wait ? end.getTime() - 1005 : end.getTime()) - start.getTime(), oauthPath, jsonString);
         } catch(IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {
@@ -452,7 +462,7 @@ public class TestClass {
         }
     }
 
-    private String getResponse(HttpsURLConnection connection, boolean wait, boolean achievement) {
+    private String getResponse(HttpsURLConnection connection, boolean wait, boolean achievement, String request, String path) {
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
             StringBuilder jsonString = new StringBuilder();
@@ -474,7 +484,6 @@ public class TestClass {
             e.printStackTrace();
         } catch (IOException e) {
             try {
-                if(connection.getResponseCode() == 500) return getResponse(connection, wait, achievement);
                 BufferedReader br = new BufferedReader(new InputStreamReader(connection.getErrorStream(), "UTF-8"));
                 StringBuilder jsonString = new StringBuilder();
                 String line;
@@ -483,6 +492,8 @@ public class TestClass {
                 }
                 br.close();
                 System.out.println("Error response for user " + username + " " + jsonString.toString());
+                printError(request, path, jsonString.toString());
+                if(connection.getResponseCode() == 500) return getResponse(connection, wait, achievement, request, path);
             } catch (UnsupportedEncodingException e1) {
                 e1.printStackTrace();
             } catch (IOException e1) {
@@ -512,8 +523,8 @@ public class TestClass {
         writeInRequest(connection, createUserValues);
 
         boolean wait = true;
-        String jsonString = getResponse(connection, wait, false);
+        String jsonString = getResponse(connection, wait, false, createUserValues, createUserPath);
         Date end = new Date();
-        printTook((wait ? end.getTime() - 1005 : end.getTime()) - start.getTime(), createUserPath);
+        printTook((wait ? end.getTime() - 1005 : end.getTime()) - start.getTime(), createUserPath, jsonString);
     }
 }
