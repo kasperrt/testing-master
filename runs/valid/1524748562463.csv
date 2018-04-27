@@ -1,4 +1,0 @@
-test0@1524748562965@-852@/init/addpatient/test0@null
-test0@1524748563995@24@/oauth/token@{"access_token":"b5ae75fd-744b-4d0d-8587-be8ac000bb87","token_type":"bearer","scope":"read trust write"}
-test0@1524748567798@3803@/init/reset@{"message":"elasticsearch reset"}
-test0@1524748568910@106@/init/addpatient/test0@{"message":"user added to elasticsearch"}
