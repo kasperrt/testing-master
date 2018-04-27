@@ -25,8 +25,8 @@ public class ChartDrawing extends Application {
 
     @Override public void start(Stage stage) {
 
-        String filePrefix = "1524737197304";
-        String type = "" + filePrefix;
+        String filePrefix = "1524824764229";
+        String type = "two-nodes-" + filePrefix;
 
         String csvFile = filePrefix + ".csv";
         BufferedReader br = null;
@@ -42,7 +42,10 @@ public class ChartDrawing extends Application {
 
                 // use comma as separator
                 String[] data = line.split(csvSplitByFirst);
-                if(data.length < 2) data = line.split(cvsSplitBy);
+                //if(data.length < 2) data = line.split(cvsSplitBy);
+                System.out.println(data.length + Arrays.asList(data).toString());
+                if(data.length < 5) continue;
+                System.out.println(line);
                 String user = data[0];
                 long epochTime = Long.parseLong(data[1]);
                 long responseTime = Long.parseLong(data[2]);
@@ -165,10 +168,10 @@ public class ChartDrawing extends Application {
             endpoint = endpoint.substring(1);
 
             stage.setScene(scene);
-            saveAsPng(scene, "graph/" + endpoint.replace("/", "-") + "-" + type + ".png");
+            saveAsPng(scene, "graphs/" + endpoint.replace("/", "-") + "-" + type + ".png");
             //stage.show();
         }
-        //System.exit(1);
+        System.exit(1);
     }
 
     public void saveAsPng(Scene scene, String path) {
