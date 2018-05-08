@@ -7,6 +7,8 @@ import java.net.MalformedURLException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
+import java.time.Clock;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.Callable;
@@ -15,7 +17,7 @@ import java.util.concurrent.Executors;
 
 public class Start {
 
-    private static int THREADS = 6;
+    private static int THREADS = 1;
     private static boolean reset = true;
     static ArrayList<TestClass> elementLists = new ArrayList<TestClass>();
 
@@ -38,17 +40,18 @@ public class Start {
         HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
 
         try {
-            String thisFile = (new Date()).getTime() + ".csv";
+            long date = (new Date()).getTime();
+            String thisFile = date + ".csv";
 
             if(reset) {
-                TestClass newTest = new TestClass("test" + 0, thisFile);
+                TestClass newTest = new TestClass("testing", thisFile);
                 newTest.resetElastic();
             }
 
             final ExecutorService executorService = Executors.newFixedThreadPool(THREADS);
             final ArrayList<Callable<String>> tasks = new ArrayList<>();
             for (int i = 0; i < THREADS; i++) {
-                TestClass newTest = new TestClass("test" + i, thisFile);
+                TestClass newTest = new TestClass("testing" + i, thisFile);
                 //newTest.startTest(0);
                 elementLists.add(newTest);
                 tasks.add(() -> {
@@ -60,6 +63,9 @@ public class Start {
             //System.out.println("This is after the for loop");
             executorService.invokeAll(tasks);
             System.out.println("After invoking");
+            System.out.println("Saved as file " + date + ".csv");
+            ChartDrawing drawing = new ChartDrawing();
+            drawing.startDrawing(date + "");
             System.exit(1);
 
         } catch (MalformedURLException e) {

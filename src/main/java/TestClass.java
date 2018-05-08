@@ -17,6 +17,8 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
+import java.time.Clock;
+import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -37,12 +39,13 @@ public class TestClass {
     private String createUserValues = "{ \"construct_next\": 26, \"p02_q01\": { \"value\": \"55\" }, \"p02_q02\": { \"value\": \"0\" }, \"p02_q03\": { \"value\": \"180\" }, \"construct_p02_q03_ft\": { \"value\": \"\" }, \"construct_p02_q03_in\": { \"value\": \"\" }, \"p02_q04\": { \"value\": \"80\" }, \"construct_p02_q04_st\": { \"value\": \"\" }, \"construct_p02_q04_lb\": { \"value\": \"\" }, \"construct_p02_typeUnits\": { \"value\": \"SI\" }, \"p03_q01\": { \"value\": \"0\" }, \"p03_q02\": { \"value\": 0 }, \"p03_q03\": { \"value\": 0 }, \"p03_q04\": { \"value\": \"1\" }, \"p03_q05\": { \"value\": \"1\" }, \"p03_q06\": { \"value\": 0 }, \"p03_q07\": { \"value\": 0 }, \"p04_q1\": { \"value\": \"18\", \"describe\": \"Norwegian\" }, \"p05_q01\": { \"value\": \"1\" }, \"p06_q01\": { \"value\": \"0\" }, \"p08_q01\": { \"value\": \"3\" }, \"p08_q02\": { \"value\": \"8\" }, \"p09_q01\": { \"value\": \"3\" }, \"p10_q01\": { \"value\": \"4\" }, \"p11_q01\": { \"value\": \"0\" }, \"p11_q02\": { \"value\": \"1\" }, \"p12_q01\": { \"value\": \"0\" }, \"p13_q01\": { \"value\": \"1\" }, \"p13_q02\": { \"value\": \"0\" }, \"p13_q03\": { \"value\": \"1\" }, \"p13_q04\": { \"value\": \"0\" }, \"p13_q05\": { \"value\": \"1\" }, \"p13_q06\": { \"value\": \"0\" }, \"p13_q07\": { \"value\": \"1\" }, \"p13_q08\": { \"value\": \"0\" }, \"p13_q09\": { \"value\": \"1\" }, \"p13_q10\": { \"value\": \"0\" }, \"p13_q11\": { \"value\": \"1\" }, \"p13_q12\": { \"value\": \"0\" }, \"p13_q13\": { \"value\": \"1\" }, \"p13_q14\": { \"value\": \"0\" }, \"p13_q15\": { \"value\": \"1\" }, \"p13_q16\": { \"value\": \"0\" }, \"p13_q17\": { \"value\": \"1\" }, \"p13_q18\": { \"value\": \"0\" }, \"p13_q19\": { \"value\": \"1\" }, \"p13_q20\": { \"value\": \"0\" }, \"p13_q21\": { \"value\": \"1\" }, \"p13_q22\": { \"value\": \"0\" }, \"p13_q23\": { \"value\": \"1\" }, \"p13_q24\": { \"value\": \"0\" }, \"p14_q01\": { \"value\": \"5\" }, \"p15_q01\": { \"value\": \"1\" }, \"p16_q01\": { \"value\": \"0\" }, \"p16_q02\": { \"value\": \"1\" }, \"p16_q03\": { \"value\": \"2\" }, \"p16_q04\": { \"value\": \"3\" }, \"p16_q05\": { \"value\": \"4\" }, \"p17_q01\": { \"value\": \"0\" }, \"p17_q02\": { \"value\": \"1\" }, \"p17_q03\": { \"value\": \"2\" }, \"p17_q04\": { \"value\": \"3\" }, \"p17_q05\": { \"value\": \"4\" }, \"p17_q06\": { \"value\": \"5\" }, \"p17_q07\": { \"value\": \"6\" }, \"p17_q08\": { \"value\": \"0\" }, \"p17_q09\": { \"value\": \"1\" }, \"p17_q10\": { \"value\": \"2\" }, \"p18_q01\": { \"value\": \"0\" }, \"p18_q02\": { \"value\": \"1\" }, \"p18_q03\": { \"value\": \"2\" }, \"p18_q04\": { \"value\": \"3\" }, \"p18_q05\": { \"value\": \"4\" }, \"p18_q06\": { \"value\": \"5\" }, \"p18_q07\": { \"value\": \"6\" }, \"p18_q08\": { \"value\": \"7\" }, \"p07_q01\": { \"value\": \"0\" }, \"p19_q01\": { \"value\": \"Gaming\", \"scale\": \"3\" }, \"p19_q02\": { \"value\": \"Eating\", \"scale\": \"5\" }, \"p20_q01\": { \"value\": \"1\" }, \"p20_q02\": { \"value\": 0 }, \"p20_q03\": { \"value\": 0 }, \"p20_q04\": { \"value\": \"1\" }, \"p20_q05\": { \"value\": 0 }, \"p20_q06\": { \"value\": 0 }, \"p20_q07\": { \"value\": 0 }, \"p20_q08\": { \"value\": \"1\" }, \"p20_q09\": { \"value\": 0 }, \"p21_q01\": { \"value\": 0 }, \"p21_q02\": { \"value\": 0 }, \"p21_q03\": { \"value\": 0 }, \"p21_q04\": { \"value\": 0 }, \"p21_q05\": { \"value\": 0 }, \"p21_q06\": { \"value\": 0 }, \"p21_q07\": { \"value\": 0 }, \"p21_q08\": { \"value\": 0 }, \"p21_q09\": { \"value\": 0 }, \"p21_q10\": { \"value\": 0 }, \"p21_q11\": { \"value\": 0 }, \"p21_q12\": { \"value\": 0 }, \"p21_q13\": { \"value\": 0 }, \"p21_q14\": { \"value\": 0 }, \"p21_q15\": { \"value\": 0 }, \"p21_q16\": { \"value\": 0 }, \"p21_q17\": { \"value\": \"Hello World!\" }, \"p21_q18\": { \"value\": \"\" }, \"p22_q01\": { \"value\": \"0\" }, \"p22_q02\": { \"value\": \"1\" }, \"p22_q03\": { \"value\": \"2\" }, \"p22_q04\": { \"value\": \"3\" }, \"p22_q05\": { \"value\": \"4\" }, \"p23_q01\": { \"value\": \"52\" }, \"p24_q01\": { \"value\": \"0\" }, \"p24_q02\": { \"value\": \"1\" }, \"p24_q03\": { \"value\": \"2\" }, \"p24_q04\": { \"value\": \"0\" }, \"p25_q01\": { \"value\": \"0\" }, \"p25_q02\": { \"value\": \"1\" }, \"p25_q03\": { \"value\": \"2\" }, \"p25_q04\": { \"value\": \"3\" }, \"p25_q05\": { \"value\": \"4\" }, \"p25_q06\": { \"value\": \"0\" }, \"p25_q07\": { \"value\": \"1\" }, \"p25_q08\": { \"value\": \"2\" }, \"p25_q09\": { \"value\": \"3\" }, \"p25_q10\": { \"value\": \"4\" }, \"p26_q01\": { \"value\": \"0\" }, \"p26_q02\": { \"value\": \"1\" }, \"p26_q03\": { \"value\": \"2\" }, \"p26_q04\": { \"value\": \"3\" }, \"p26_q05\": { \"value\": \"0\" }, \"p26_q06\": { \"value\": \"1\" }, \"p26_q07\": { \"value\": \"2\" }, \"p26_q08\": { \"value\": \"3\" } }";
     private final boolean DEBUG = true;
     private String writer;
-    private int maxWeekOffset = 51;
+    private int maxWeekOffset = 1;
 
     /**
      * Paths
      */
 
+    private String currentPlanPath = "/patient/plan/latest";
     private String tailoringPath = "/patient/plan/tailoring";
     private String achievementsPath = "/patient/achievements";
     private String activityPath = "/patient/activity";
@@ -69,6 +72,12 @@ public class TestClass {
     private String tokenType;
     private String authorization = "Authorization: ";
 
+
+    private Clock clock;
+    private Date started = new Date();
+    private Date nowDate = new Date();
+    private long start = Clock.systemUTC().millis();
+
     private int port = 443;
 
     public TestClass(String username, String writer) {
@@ -78,29 +87,41 @@ public class TestClass {
         this.requestHandler = new HTTPSamplerProxy();
         this.createUserPath = this.createUserPath + username;
         this.writer = writer;
+        int calendarDay = 4;
+        Date thisDate;
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.DAY_OF_WEEK, calendarDay);
+        thisDate = c.getTime();
+        System.out.println(thisDate.getTime());
+        thisDate.setTime(thisDate.getTime() - 31556926000L);
+        thisDate.setHours(0);
+        started = (Date) thisDate.clone();
+        nowDate = (Date) started.clone();
+
         createUser();
     }
 
     public void startTest(int weekOffset) {
-        print("WeekOffset is now " + weekOffset);
-        print("Crash here 14?");
-        getAccessToken();
-        print("Crash here 15?");
-        startNewPlan();
-        print("Crash here 16?");
-        postExercises();
-        print("Crash here 17?");
-        postEducation();
-        print("Crash here 18?");
-        int calendarDay = 2;
+        int calendarDay = 4;
         Date thisDate = new Date();
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.DAY_OF_WEEK, calendarDay);
+        thisDate = c.getTime();
+        thisDate.setTime(thisDate.getTime() - 31556926000L + (604800000 * weekOffset));
+        thisDate.setHours(0);
+        nowDate = (Date) thisDate.clone();
+        getAccessToken();
+        nowDate = (Date) thisDate.clone();
+        startNewPlan();
+        nowDate = (Date) thisDate.clone();
+        postExercises(weekOffset);
+        nowDate = (Date) thisDate.clone();
+        postEducation(weekOffset);
         Date endDate;
-
+        nowDate = (Date) thisDate.clone();
+        System.out.println(nowDate.getTime());
         for(int day = 0; day < 7; day++) {
-            Calendar c = Calendar.getInstance();
-            c.set(Calendar.DAY_OF_WEEK, calendarDay);
-            thisDate = c.getTime();
-            thisDate.setTime(thisDate.getTime() - 31556926000L + (604800000 * weekOffset));
+            thisDate = addDays(thisDate, 1);
             for (int i = 0; i < activityPlan.length(); i++) {
                 thisDate.setHours(i);
                 endDate = (Date) thisDate.clone();
@@ -108,7 +129,11 @@ public class TestClass {
                 String type = null;
                 try {
                     type = (int) activityPlan.get(i) == 0 ? "sleeping" : "walking";
-                    postActivity(thisDate.getTime(), endDate.getTime(), (int) activityPlan.get(i), type);
+                    nowDate = (Date) endDate.clone();
+                    System.out.println(nowDate.getTime());
+                    //System.exit(1);
+                    postActivity(thisDate.getTime(), endDate.getTime(), (int) activityPlan.get(i), type, weekOffset);
+                    System.out.println("posted activity");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -118,19 +143,29 @@ public class TestClass {
                 print("Hour " + i + " of " + (activityPlan.length() - 1));
             }
             calendarDay += day;
-            if(calendarDay > 7) calendarDay = 1;
+            if(calendarDay > 6) calendarDay = 0;
         }
         activityPlan = new JSONArray();
         getTailoring(thisDate);
         print("crash here weekly offset " + weekOffset);
         print("We're at the end now, weekOffset " + weekOffset);
         if (weekOffset < maxWeekOffset) startTest(weekOffset + 1);
+    }
 
+    public static Date addDays(Date date, int days)
+    {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, days); //minus number would decrement the days
+        return cal.getTime();
     }
 
     private void getTailoring(Date thisDate){
         try {
+            System.out.println("Tailoring clock " + nowDate.getTime());
+            System.out.println("get tailoring");
             TimeUnit.MILLISECONDS.sleep(1005);
+            setAppClock();
             Date start = new Date();
             HttpsURLConnection connection = getConnection("GET", tailoringPath, false, true, false);
 
@@ -140,6 +175,8 @@ public class TestClass {
             printTook((wait ? end.getTime() - 1005 : end.getTime()) - start.getTime(), tailoringPath, returnString);
             JSONArray tailoringObject = new JSONArray(returnString.toString());
             print("getTailoring here 8 " + returnString.toString());
+            System.out.println("exiting here");
+            System.exit(1);
             print("crash here 1?");
             this.questions = new JSONObject();
             JSONArray questionArray = new JSONArray();
@@ -216,6 +253,7 @@ public class TestClass {
 
     private void startNewPlan(){
         try {
+            setAppClock();
             Date start = new Date();
             HttpsURLConnection connection = getConnection("POST", planNextPath, true, true, false);
 
@@ -230,6 +268,12 @@ public class TestClass {
             writeInRequest(connection, sendString);
             boolean wait = true;
             String jsonString = getResponse(connection, wait, false, sendString, planNextPath);
+
+            HttpsURLConnection conn = getConnection("GET", currentPlanPath, false, true, false);
+            String currentPlan = getResponse(conn, true, false, "", currentPlanPath);
+            System.out.println(currentPlan);
+            //System.exit(1);
+
             Date end = new Date();
             printTook((wait ? end.getTime() - 1005 : end.getTime()) - start.getTime(), planNextPath, jsonString);
             JSONObject jsonObj = new JSONObject(jsonString);
@@ -322,8 +366,8 @@ public class TestClass {
         }
     }
 
-    private void postEducation() {
-        postRequest(getConnection("POST", educationPath, true, true, false), educationPlan.toString(), educationPath);
+    private void postEducation(int week) {
+        postRequest(getConnection("POST", educationPath, true, true, false), educationPlan.toString(), educationPath, week);
     }
 
     private void printError(String request, String path, String response) {
@@ -348,7 +392,8 @@ public class TestClass {
         }
     }
 
-    private void postRequest(HttpsURLConnection post, String s, String path) {
+    private void postRequest(HttpsURLConnection post, String s, String path, int week) {
+        setAppClock();
         Date start = new Date();
         HttpsURLConnection connection = post;
         connection.setRequestProperty("Content-Type", "application/json");
@@ -356,12 +401,12 @@ public class TestClass {
         writeInRequest(connection, s);
 
         boolean wait = true;
-        String jsonString = getResponse(connection, wait, true, s, path);
+        String jsonString = getResponse(connection, wait, week > 0 ? true : false, s, path);
         Date end = new Date();
         printTook((wait ? end.getTime() - 1005 : end.getTime()) - start.getTime(), path, jsonString);
     }
 
-    private void postActivity(long start, long end, long steps, String type) {
+    private void postActivity(long start, long end, long steps, String type, int week) {
         try {
             JSONObject toSend = new JSONObject();
             JSONArray activities = new JSONArray();
@@ -373,13 +418,14 @@ public class TestClass {
 
             activities.put(activity);
             toSend.put("activities", activities);
-            postRequest(getConnection("POST", activityPath, true, true, false), toSend.toString(), activityPath);
+            postRequest(getConnection("POST", activityPath, true, true, false), toSend.toString(), activityPath, week);
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
     private void getAchievements() {
+        setAppClock();
         Date start = new Date();
         HttpsURLConnection connection = getConnection("GET", achievementsPath, false, true, false);
         boolean wait = false;
@@ -388,8 +434,8 @@ public class TestClass {
         printTook((wait ? end.getTime() - 1005 : end.getTime()) - start.getTime(), achievementsPath, returnString);
     }
 
-    private void postExercises() {
-        postRequest(getConnection("POST", exercisePath, true, true, false), exercisePlan.toString(), exercisePath);
+    private void postExercises(int week) {
+        postRequest(getConnection("POST", exercisePath, true, true, false), exercisePlan.toString(), exercisePath, week);
     }
 
     private HttpsURLConnection getConnection(String type, String path, boolean input, boolean output, boolean basic) {
@@ -419,13 +465,18 @@ public class TestClass {
     public void resetElastic() throws IOException, JSONException, InterruptedException {
         print("Resetting ElasticSearch");
         getAccessToken();
+        setAppClock();
         Date start = new Date();
-        HttpsURLConnection connection = getConnection("GET", resetPath, false, true, false);
+        HttpsURLConnection connection1 = getConnection("GET", "/init/reset_static", false, true, false);
 
-        boolean wait = false;
-        String jsonString = getResponse(connection, wait, false, "", resetPath);
+
+        String jsonString1 = getResponse(connection1, false, false, "", resetPath);
+        HttpsURLConnection connection2 = getConnection("GET", resetPath, false, true, false);
+
+
+        String jsonString2 = getResponse(connection2, false, false, "", resetPath);
         Date end = new Date();
-        printTook((wait ? end.getTime() - 1005 : end.getTime()) - start.getTime(), resetPath, jsonString);
+        printTook((false ? end.getTime() - 1005 : end.getTime()) - start.getTime(), resetPath, jsonString2);
     }
 
     private void getAccessToken() {
@@ -436,7 +487,7 @@ public class TestClass {
                             "username=" + username + "&" +
                             "password=" + password;
             byte[] postData = urlParameters.getBytes(StandardCharsets.UTF_8);
-
+            setAppClock();
             Date start = new Date();
             HttpsURLConnection connection = getConnection("POST", oauthPath, false, true, true);
 
@@ -491,17 +542,45 @@ public class TestClass {
                     jsonString.append(line);
                 }
                 br.close();
+
+                System.out.println("Received an error " + connection.getResponseCode());
                 System.out.println("Error response for user " + username + " " + jsonString.toString());
                 printError(request, path, jsonString.toString());
-                if(connection.getResponseCode() == 500) return getResponse(connection, wait, achievement, request, path);
+
+                if(connection.getResponseCode() == 500) {
+                    /*System.out.println(1);
+                    System.out.println(connection.getHeaderField("Content-Type") + " " +
+                        connection.getRequestMethod());
+                    System.out.println(2);
+                    HttpsURLConnection conn = getConnection(connection.getRequestMethod(), path, connection.getRequestMethod().equals("POST"), true, false);
+                    System.out.println(5);
+                    conn.setRequestProperty("Content-Type", "application/json");
+                    System.out.println(3);
+                    conn.setUseCaches(false);
+                    System.out.println(4);
+                    if(connection.getRequestMethod().equals("POST")) {
+                        writeInRequest(conn, request);
+                    }
+                    System.out.println("Request " + request);
+                    return getResponse(conn, wait, achievement, request, path);*/
+                    System.exit(0);
+                }
             } catch (UnsupportedEncodingException e1) {
                 e1.printStackTrace();
             } catch (IOException e1) {
                 e1.printStackTrace();
+                System.out.println("Exited here");
+                System.exit(1);
             }
             e.printStackTrace();
         }
         return null;
+    }
+
+    private void setAppClock() {
+        HttpsURLConnection c = getConnection("GET", "/clock/" + nowDate.getTime(), false, true, false);
+        String jsonString = getResponse(c, false, false, "", "/clock/");
+        System.out.println("Set time to " + jsonString);
     }
 
     private void writeInRequest(HttpsURLConnection connection, String s) {
@@ -516,6 +595,7 @@ public class TestClass {
     }
 
     private void createUser() {
+        setAppClock();
         Date start = new Date();
         HttpsURLConnection connection = getConnection("POST", createUserPath, true, true, false);
 

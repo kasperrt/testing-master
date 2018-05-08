@@ -22,10 +22,10 @@ public class ChartDrawing extends Application {
 
     private HashMap<String, HashMap<String, HashMap<String, ArrayList<Long>>>> endpoints = new HashMap<>();
     private HashMap<String, HashMap<String, Long>> minMaxNumbers = new HashMap<>();
+    private String filePrefix = "1525174377296";
 
     @Override public void start(Stage stage) {
-
-        String filePrefix = "1524824764229";
+        System.out.println(filePrefix);
         String type = "two-nodes-" + filePrefix;
 
         String csvFile = filePrefix + ".csv";
@@ -182,6 +182,12 @@ public class ChartDrawing extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void startDrawing(String timestamp) {
+        filePrefix = timestamp;
+        System.out.println(filePrefix);
+        launch();
     }
 
     public static void main(String[] args) {
