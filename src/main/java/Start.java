@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class Start {
 
@@ -46,6 +47,9 @@ public class Start {
             if(reset) {
                 TestClass newTest = new TestClass("testing", thisFile);
                 newTest.resetElastic();
+                System.out.println("Waiting 5 seconds");
+                TimeUnit.MILLISECONDS.sleep(5000);
+                System.out.println("Done waiting, resuming");
             }
 
             final ExecutorService executorService = Executors.newFixedThreadPool(THREADS);

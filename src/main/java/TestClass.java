@@ -7,18 +7,13 @@ import org.json.JSONObject;
 
 import javax.net.ssl.*;
 import java.io.*;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
 import java.time.Clock;
-import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -39,7 +34,7 @@ public class TestClass {
     private String createUserValues = "{ \"construct_next\": 26, \"p02_q01\": { \"value\": \"55\" }, \"p02_q02\": { \"value\": \"0\" }, \"p02_q03\": { \"value\": \"180\" }, \"construct_p02_q03_ft\": { \"value\": \"\" }, \"construct_p02_q03_in\": { \"value\": \"\" }, \"p02_q04\": { \"value\": \"80\" }, \"construct_p02_q04_st\": { \"value\": \"\" }, \"construct_p02_q04_lb\": { \"value\": \"\" }, \"construct_p02_typeUnits\": { \"value\": \"SI\" }, \"p03_q01\": { \"value\": \"0\" }, \"p03_q02\": { \"value\": 0 }, \"p03_q03\": { \"value\": 0 }, \"p03_q04\": { \"value\": \"1\" }, \"p03_q05\": { \"value\": \"1\" }, \"p03_q06\": { \"value\": 0 }, \"p03_q07\": { \"value\": 0 }, \"p04_q1\": { \"value\": \"18\", \"describe\": \"Norwegian\" }, \"p05_q01\": { \"value\": \"1\" }, \"p06_q01\": { \"value\": \"0\" }, \"p08_q01\": { \"value\": \"3\" }, \"p08_q02\": { \"value\": \"8\" }, \"p09_q01\": { \"value\": \"3\" }, \"p10_q01\": { \"value\": \"4\" }, \"p11_q01\": { \"value\": \"0\" }, \"p11_q02\": { \"value\": \"1\" }, \"p12_q01\": { \"value\": \"0\" }, \"p13_q01\": { \"value\": \"1\" }, \"p13_q02\": { \"value\": \"0\" }, \"p13_q03\": { \"value\": \"1\" }, \"p13_q04\": { \"value\": \"0\" }, \"p13_q05\": { \"value\": \"1\" }, \"p13_q06\": { \"value\": \"0\" }, \"p13_q07\": { \"value\": \"1\" }, \"p13_q08\": { \"value\": \"0\" }, \"p13_q09\": { \"value\": \"1\" }, \"p13_q10\": { \"value\": \"0\" }, \"p13_q11\": { \"value\": \"1\" }, \"p13_q12\": { \"value\": \"0\" }, \"p13_q13\": { \"value\": \"1\" }, \"p13_q14\": { \"value\": \"0\" }, \"p13_q15\": { \"value\": \"1\" }, \"p13_q16\": { \"value\": \"0\" }, \"p13_q17\": { \"value\": \"1\" }, \"p13_q18\": { \"value\": \"0\" }, \"p13_q19\": { \"value\": \"1\" }, \"p13_q20\": { \"value\": \"0\" }, \"p13_q21\": { \"value\": \"1\" }, \"p13_q22\": { \"value\": \"0\" }, \"p13_q23\": { \"value\": \"1\" }, \"p13_q24\": { \"value\": \"0\" }, \"p14_q01\": { \"value\": \"5\" }, \"p15_q01\": { \"value\": \"1\" }, \"p16_q01\": { \"value\": \"0\" }, \"p16_q02\": { \"value\": \"1\" }, \"p16_q03\": { \"value\": \"2\" }, \"p16_q04\": { \"value\": \"3\" }, \"p16_q05\": { \"value\": \"4\" }, \"p17_q01\": { \"value\": \"0\" }, \"p17_q02\": { \"value\": \"1\" }, \"p17_q03\": { \"value\": \"2\" }, \"p17_q04\": { \"value\": \"3\" }, \"p17_q05\": { \"value\": \"4\" }, \"p17_q06\": { \"value\": \"5\" }, \"p17_q07\": { \"value\": \"6\" }, \"p17_q08\": { \"value\": \"0\" }, \"p17_q09\": { \"value\": \"1\" }, \"p17_q10\": { \"value\": \"2\" }, \"p18_q01\": { \"value\": \"0\" }, \"p18_q02\": { \"value\": \"1\" }, \"p18_q03\": { \"value\": \"2\" }, \"p18_q04\": { \"value\": \"3\" }, \"p18_q05\": { \"value\": \"4\" }, \"p18_q06\": { \"value\": \"5\" }, \"p18_q07\": { \"value\": \"6\" }, \"p18_q08\": { \"value\": \"7\" }, \"p07_q01\": { \"value\": \"0\" }, \"p19_q01\": { \"value\": \"Gaming\", \"scale\": \"3\" }, \"p19_q02\": { \"value\": \"Eating\", \"scale\": \"5\" }, \"p20_q01\": { \"value\": \"1\" }, \"p20_q02\": { \"value\": 0 }, \"p20_q03\": { \"value\": 0 }, \"p20_q04\": { \"value\": \"1\" }, \"p20_q05\": { \"value\": 0 }, \"p20_q06\": { \"value\": 0 }, \"p20_q07\": { \"value\": 0 }, \"p20_q08\": { \"value\": \"1\" }, \"p20_q09\": { \"value\": 0 }, \"p21_q01\": { \"value\": 0 }, \"p21_q02\": { \"value\": 0 }, \"p21_q03\": { \"value\": 0 }, \"p21_q04\": { \"value\": 0 }, \"p21_q05\": { \"value\": 0 }, \"p21_q06\": { \"value\": 0 }, \"p21_q07\": { \"value\": 0 }, \"p21_q08\": { \"value\": 0 }, \"p21_q09\": { \"value\": 0 }, \"p21_q10\": { \"value\": 0 }, \"p21_q11\": { \"value\": 0 }, \"p21_q12\": { \"value\": 0 }, \"p21_q13\": { \"value\": 0 }, \"p21_q14\": { \"value\": 0 }, \"p21_q15\": { \"value\": 0 }, \"p21_q16\": { \"value\": 0 }, \"p21_q17\": { \"value\": \"Hello World!\" }, \"p21_q18\": { \"value\": \"\" }, \"p22_q01\": { \"value\": \"0\" }, \"p22_q02\": { \"value\": \"1\" }, \"p22_q03\": { \"value\": \"2\" }, \"p22_q04\": { \"value\": \"3\" }, \"p22_q05\": { \"value\": \"4\" }, \"p23_q01\": { \"value\": \"52\" }, \"p24_q01\": { \"value\": \"0\" }, \"p24_q02\": { \"value\": \"1\" }, \"p24_q03\": { \"value\": \"2\" }, \"p24_q04\": { \"value\": \"0\" }, \"p25_q01\": { \"value\": \"0\" }, \"p25_q02\": { \"value\": \"1\" }, \"p25_q03\": { \"value\": \"2\" }, \"p25_q04\": { \"value\": \"3\" }, \"p25_q05\": { \"value\": \"4\" }, \"p25_q06\": { \"value\": \"0\" }, \"p25_q07\": { \"value\": \"1\" }, \"p25_q08\": { \"value\": \"2\" }, \"p25_q09\": { \"value\": \"3\" }, \"p25_q10\": { \"value\": \"4\" }, \"p26_q01\": { \"value\": \"0\" }, \"p26_q02\": { \"value\": \"1\" }, \"p26_q03\": { \"value\": \"2\" }, \"p26_q04\": { \"value\": \"3\" }, \"p26_q05\": { \"value\": \"0\" }, \"p26_q06\": { \"value\": \"1\" }, \"p26_q07\": { \"value\": \"2\" }, \"p26_q08\": { \"value\": \"3\" } }";
     private final boolean DEBUG = true;
     private String writer;
-    private int maxWeekOffset = 1;
+    private int maxWeekOffset = 51;
 
     /**
      * Paths
@@ -87,53 +82,77 @@ public class TestClass {
         this.requestHandler = new HTTPSamplerProxy();
         this.createUserPath = this.createUserPath + username;
         this.writer = writer;
-        int calendarDay = 4;
+        int calendarDay = 1;
         Date thisDate;
         Calendar c = Calendar.getInstance();
         c.set(Calendar.DAY_OF_WEEK, calendarDay);
         thisDate = c.getTime();
         System.out.println(thisDate.getTime());
         thisDate.setTime(thisDate.getTime() - 31556926000L);
-        thisDate.setHours(0);
+        thisDate.setHours(2);
+        thisDate.setMinutes(0);
+        thisDate.setSeconds(0);
+
+        if(thisDate.getDay() != 1) {
+            if(thisDate.getDay() == 0) {
+                thisDate = addDays(thisDate, 1);
+            } else {
+                int diff = thisDate.getDay() - 1;
+                thisDate = addDays(thisDate, - diff);
+            }
+
+        }
+
         started = (Date) thisDate.clone();
         nowDate = (Date) started.clone();
-
         createUser();
     }
 
     public void startTest(int weekOffset) {
-        int calendarDay = 4;
-        Date thisDate = new Date();
+        int calendarDay = 1;
+        Date thisDate;
         Calendar c = Calendar.getInstance();
         c.set(Calendar.DAY_OF_WEEK, calendarDay);
         thisDate = c.getTime();
         thisDate.setTime(thisDate.getTime() - 31556926000L + (604800000 * weekOffset));
-        thisDate.setHours(0);
+        thisDate.setHours(2);
+        thisDate.setMinutes(0);
+        thisDate.setSeconds(0);
+        if(thisDate.getDay() != 1) {
+            if(thisDate.getDay() == 0) {
+                thisDate = addDays(thisDate, 1);
+            } else {
+                int diff = thisDate.getDay() - 1;
+                thisDate = addDays(thisDate, - diff);
+            }
+
+        }
         nowDate = (Date) thisDate.clone();
         getAccessToken();
+        long planStart = startNewPlan();
+        thisDate.setTime(planStart);
         nowDate = (Date) thisDate.clone();
-        startNewPlan();
-        nowDate = (Date) thisDate.clone();
+        System.out.println("Exercise plan " + exercisePlan.toString());
+        System.out.println("Question plan " + questions.toString());
+        System.out.println("Education plan " + educationPlan.toString());
+        System.out.println("Activity plan " + activityPlan.toString());
         postExercises(weekOffset);
-        nowDate = (Date) thisDate.clone();
         postEducation(weekOffset);
         Date endDate;
-        nowDate = (Date) thisDate.clone();
-        System.out.println(nowDate.getTime());
         for(int day = 0; day < 7; day++) {
-            thisDate = addDays(thisDate, 1);
             for (int i = 0; i < activityPlan.length(); i++) {
                 thisDate.setHours(i);
+                thisDate.setMinutes(0);
+                thisDate.setSeconds(0);
                 endDate = (Date) thisDate.clone();
-                endDate.setHours(i + 1);
-                String type = null;
+                endDate.setMinutes(59);
+                endDate.setSeconds(59);
+                Calendar calendar = GregorianCalendar.getInstance();
+                calendar.setTime(endDate);
                 try {
-                    type = (int) activityPlan.get(i) == 0 ? "sleeping" : "walking";
+                    String type = (int) activityPlan.get(i) == 0 ? "sleeping" : "walking";
                     nowDate = (Date) endDate.clone();
-                    System.out.println(nowDate.getTime());
-                    //System.exit(1);
                     postActivity(thisDate.getTime(), endDate.getTime(), (int) activityPlan.get(i), type, weekOffset);
-                    System.out.println("posted activity");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -141,14 +160,14 @@ public class TestClass {
                 print("Week " + weekOffset + " of " + maxWeekOffset);
                 print("Day " + day + " of 6");
                 print("Hour " + i + " of " + (activityPlan.length() - 1));
+                print("Date " + nowDate.toString());
             }
             calendarDay += day;
             if(calendarDay > 6) calendarDay = 0;
+            thisDate = addDays(thisDate, 1);
         }
         activityPlan = new JSONArray();
         getTailoring(thisDate);
-        print("crash here weekly offset " + weekOffset);
-        print("We're at the end now, weekOffset " + weekOffset);
         if (weekOffset < maxWeekOffset) startTest(weekOffset + 1);
     }
 
@@ -163,7 +182,6 @@ public class TestClass {
     private void getTailoring(Date thisDate){
         try {
             System.out.println("Tailoring clock " + nowDate.getTime());
-            System.out.println("get tailoring");
             TimeUnit.MILLISECONDS.sleep(1005);
             setAppClock();
             Date start = new Date();
@@ -174,50 +192,31 @@ public class TestClass {
             Date end = new Date();
             printTook((wait ? end.getTime() - 1005 : end.getTime()) - start.getTime(), tailoringPath, returnString);
             JSONArray tailoringObject = new JSONArray(returnString.toString());
-            print("getTailoring here 8 " + returnString.toString());
-            System.out.println("exiting here");
-            System.exit(1);
-            print("crash here 1?");
+
             this.questions = new JSONObject();
             JSONArray questionArray = new JSONArray();
             this.questions.put("date", thisDate.getTime());
             String answer;
-            for(int i = 0; i < tailoringObject.length(); i++) {
-                print("crash here 2 - " + i + "?");
-                JSONObject thisQuestionObject = tailoringObject.getJSONObject(i);
+            for(int i = 0; i < tailoringObject.length(); i++) { JSONObject thisQuestionObject = tailoringObject.getJSONObject(i);
                 JSONObject thisToSend = new JSONObject();
                 thisToSend.put("questionid", thisQuestionObject.get("questionid"));
                 JSONArray options = (JSONArray) thisQuestionObject.get("options");
-                print("crash here 3 - " + i + "?");
                 if(((JSONObject) options.get(0)).getString("optiontype").equals("checkbox")) {
-                    print("crash here 7 - " + i + "?");
                     int randomNumber = (int) Math.floor(Math.random() * options.length());
                     ArrayList<String> answers = new ArrayList<>();
-                    print("crash here 10 - " + i + "?");
-                    print("Options " + options.toString());
                     if(randomNumber == 0) randomNumber = 1;
                     for(int y = 0; y < randomNumber; y++) {
                         int index = (int) Math.floor(Math.random() * (options.length() - 1));
-                        print("Index " + index);
-                        print("Length " + options.length());
-                        String toAdd = (String) ((JSONObject) options.remove(index)).get("option");
+                        String toAdd = (String) ((JSONObject) options.remove(index)).get("value");
                         answers.add(toAdd);
                         if(options.length() < 1) break;
-                        //if(!toAdd.equals("none")) break;
                     }
-                    print("crash here 8 - " + i + "?");
                     answers.remove("none");
                     if(answers.size() == 0) answers.add((String) ((JSONObject) options.remove(0)).get("option"));
                     JSONArray preAnswer = new JSONArray(answers);
                     answer = String.join(";", answers);
-                    //answer = preAnswer.toString();
-                    print("Answer is " + answer);
                     thisToSend.put("answer", answer);
-                    print("crash here 5 - " + i + "?");
                 } else {
-                    print("crash here 9 - " + i + "?");
-                    print("Options " + options.toString());
-                    print("Options is " + options.toString());
                     JSONObject object = (JSONObject) options.get((int) Math.floor(Math.random() * options.length()));
                     print("Chosen option " + object.toString());
                     answer = (String) object.get("value");
@@ -229,14 +228,10 @@ public class TestClass {
                         print(answer);
                         thisToSend.put("answer", object.get("value"));
                     }
-                    print("crash here 6 - " + i + "?");
                 }
-                print("crash here 4 - " + i + "?");
                 questionArray.put(thisToSend);
-                print("crash here 12 - " + i + "?");
             }
             this.questions.put("questions", questionArray);
-            print("crash here 13?");
             print("Question element " + this.questions.toString());
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -251,10 +246,11 @@ public class TestClass {
         }
     }
 
-    private void startNewPlan(){
+    private long startNewPlan(){
         try {
             setAppClock();
             Date start = new Date();
+            System.out.println("Start new plan");
             HttpsURLConnection connection = getConnection("POST", planNextPath, true, true, false);
 
 
@@ -263,7 +259,9 @@ public class TestClass {
                 sendString = questions.toString();
             }
 
-
+            System.out.println("Sending plan");
+            System.out.println("Questions here " + questions.toString());
+            System.out.println("To send: " + sendString);
             connection.setRequestProperty( "Content-Type", "application/json");
             writeInRequest(connection, sendString);
             boolean wait = true;
@@ -272,8 +270,7 @@ public class TestClass {
             HttpsURLConnection conn = getConnection("GET", currentPlanPath, false, true, false);
             String currentPlan = getResponse(conn, true, false, "", currentPlanPath);
             System.out.println(currentPlan);
-            //System.exit(1);
-
+            JSONObject currentPlanParsed = new JSONObject(currentPlan);
             Date end = new Date();
             printTook((wait ? end.getTime() - 1005 : end.getTime()) - start.getTime(), planNextPath, jsonString);
             JSONObject jsonObj = new JSONObject(jsonString);
@@ -323,7 +320,7 @@ public class TestClass {
             }
 
             // Creating steps array
-
+            totalSteps = 0;
             steps = (int) Math.floor(Math.random() * 150);
             JSONObject activity = (JSONObject) jsonObj.get("activity");
             if(lazy) {
@@ -331,29 +328,35 @@ public class TestClass {
             } else {
                 steps = (int) activity.get("goal") + steps;
             }
+            System.out.println("Goal steps " + activity.get("goal"));
+            System.out.println("Steps " + steps);
+            System.out.println("Lazy " + lazy);
 
             for(int i = 0; i < 24; i++) {
-                if(i < 8 || i > 14) {
+                if(i < 8 || i > 20) {
                     activityPlan.put(0);
                 } else {
                     int thisStep = (int) Math.floor(Math.random() * 30);
                     if(lazy) {
                         if((int) Math.floor(Math.random() * 3) == 1) {
-                            thisStep = (steps / 15);
+                            thisStep = (steps / 14);
                         } else {
-                            if(thisStep < (steps / 15)) {
-                                thisStep = (steps / 15) - thisStep;
+                            if(thisStep < (steps / 14)) {
+                                thisStep = (steps / 14) - thisStep;
                             } else {
-                                thisStep = thisStep - (steps / 15);
+                                thisStep = thisStep - (steps / 14);
                             }
                         }
                     } else {
-                        thisStep += (steps / 15);
+                        thisStep += (steps / 14);
                     }
                     activityPlan.put(thisStep);
                     totalSteps += thisStep;
                 }
             }
+
+            System.out.println("Plan " + activityPlan.toString());
+            System.out.println("Total steps " + totalSteps);
 
             for(int i = 0; i < ((JSONArray) jsonObj.get("educations")).length(); i++) {
                 ((JSONObject) ((JSONArray) jsonObj.get("educations")).get(i)).put("is_correct", true);
@@ -361,8 +364,14 @@ public class TestClass {
 
             suggestedPlan = jsonObj;
             educationPlan = (JSONArray) jsonObj.get("educations");
+            long pdate = (long) currentPlanParsed.get("pdate");
+            System.out.println("PDATE VARIABLE " + pdate);
+            return pdate;
         } catch (JSONException e) {
             e.printStackTrace();
+            System.out.println("Crashed " + e);
+            System.exit(1);
+            return 0L;
         }
     }
 
@@ -435,6 +444,7 @@ public class TestClass {
     }
 
     private void postExercises(int week) {
+        System.out.println(exercisePlan.toString());
         postRequest(getConnection("POST", exercisePath, true, true, false), exercisePlan.toString(), exercisePath, week);
     }
 
