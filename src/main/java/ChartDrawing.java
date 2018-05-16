@@ -22,21 +22,12 @@ public class ChartDrawing extends Application {
 
     private HashMap<String, HashMap<String, HashMap<String, ArrayList<Long>>>> endpoints = new HashMap<>();
     private HashMap<String, HashMap<String, Long>> minMaxNumbers = new HashMap<>();
-    private String filePrefix = "1525174377296";
-    private String typeSetup = "fewer-shards-two-nodes";
-
-    public ChartDrawing(String filePrefix, String typeSetup) {
-        this.filePrefix = filePrefix;
-        this.typeSetup = typeSetup;
-    }
-
-    public ChartDrawing() {
-
-    }
+    private String filePrefix = "1526478996116";
+    private String typeSetup = "fewer-shards-one-node";
 
     @Override public void start(Stage stage) {
         System.out.println(filePrefix);
-        String type = "two-nodes-" + filePrefix;
+        String type = filePrefix;
 
         String csvFile = filePrefix + ".csv";
         BufferedReader br = null;
@@ -47,7 +38,7 @@ public class ChartDrawing extends Application {
 
         try {
 
-            br = new BufferedReader(new FileReader("runs/valid/" + csvFile));
+            br = new BufferedReader(new FileReader("runs/valid/" + typeSetup + "/" + csvFile));
             while ((line = br.readLine()) != null) {
 
                 // use comma as separator
@@ -122,7 +113,7 @@ public class ChartDrawing extends Application {
 
             final NumberAxis xAxis = new NumberAxis();
             final NumberAxis yAxis = new NumberAxis(minMaxNumbers.get(endpoint).get("min"), minMaxNumbers.get(endpoint).get("max"), roundedTickRange);
-            xAxis.setLabel("Epoch time");
+            xAxis.setLabel("Request number");
             xAxis.autosize();
 
             yAxis.setLabel("Response time");
@@ -156,7 +147,7 @@ public class ChartDrawing extends Application {
                     if(!times.contains(epochTime)) times.add(epochTime);
 
                     //System.out.println(responseTime + " " + epochTime);
-                    XYChart.Data thisData = new XYChart.Data(epochTime, responseTime);
+                    XYChart.Data thisData = new XYChart.Data(i, responseTime);
                     Rectangle rect = new Rectangle(0,0);
                     rect.setVisible(false);
                     thisData.setNode(rect);
@@ -168,9 +159,9 @@ public class ChartDrawing extends Application {
             Collections.sort(times, Collections.reverseOrder());
             //yAxis.setTickUnit(100);
 
-            xAxis.setAutoRanging(false);
+            /*xAxis.setAutoRanging(false);
             xAxis.setLowerBound(times.get(0));
-            xAxis.setUpperBound(times.get(times.size() - 1));
+            xAxis.setUpperBound(times.get(times.size() - 1));*/
 
             lineChart.setAnimated(false);
             Scene scene = new Scene(lineChart, 800, 600);
@@ -195,8 +186,7 @@ public class ChartDrawing extends Application {
     }
 
     public void startDrawing(String timestamp) {
-        filePrefix = timestamp;
-        System.out.println(filePrefix);
+        this.filePrefix = timestamp;
         launch();
     }
 

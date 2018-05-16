@@ -1,6 +1,3 @@
-import org.apache.jmeter.engine.StandardJMeterEngine;
-import org.apache.jmeter.protocol.http.sampler.HTTPSamplerProxy;
-import org.apache.jorphan.collections.HashTree;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -13,7 +10,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.time.Clock;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
@@ -50,6 +46,7 @@ public class RequestClass {
     private String oauthPath = "/oauth/token";
     private String createUserPath = "/init/addpatient/";
     private String resetPath = "/init/reset";
+    private String totalsPath = "/patient/totals";
 
 
     private int totalSteps = 0;
@@ -294,12 +291,7 @@ public class RequestClass {
 
     public void getAchievements() {
         System.out.println("Getting achievements for user " + username);
-        Date start = new Date();
-        HttpsURLConnection connection = getConnection("GET", achievementsPath, false, true, false);
-        boolean wait = false;
-        String returnString = getResponse(connection, wait, false, "", achievementsPath);
-        Date end = new Date();
-        printTook((wait ? end.getTime() - 1005 : end.getTime()) - start.getTime(), achievementsPath, returnString);
+        getGeneric(achievementsPath);
         System.out.println("Got achievements for user " + username);
     }
 
@@ -349,6 +341,21 @@ public class RequestClass {
         printTook((wait ? end.getTime() - 1005 : end.getTime()) - start.getTime(), path, jsonString);
     }
 
+    private void getGeneric(String path) {
+        Date start = new Date();
+        HttpsURLConnection connection = getConnection("GET", path, false, true, false);
+        boolean wait = false;
+        String returnString = getResponse(connection, wait, false, "", path);
+        Date end = new Date();
+        printTook((wait ? end.getTime() - 1005 : end.getTime()) - start.getTime(), path, returnString);
+    }
+
+    private void getTotals() {
+        System.out.println("Getting totals for user " + username);
+        getGeneric(totalsPath);
+        System.out.println("Got totals for user " + username);
+    }
+
     private void getAccessToken() {
         try {
             System.out.println("Getting accesstoken for user " + username);
@@ -375,7 +382,7 @@ public class RequestClass {
             tokenType = jsonObj.getString("token_type");
             tokenType = tokenType.substring(0, 1).toUpperCase() + tokenType.substring(1);
             Date end = new Date();
-            printTook((wait ? end.getTime() - 1005 : end.getTime()) - start.getTime(), oauthPath, jsonString);
+            //printTook((wait ? end.getTime() - 1005 : end.getTime()) - start.getTime(), oauthPath, jsonString);
             System.out.println("Got accesstoken for user " + username);
         } catch(IOException e) {
             e.printStackTrace();
@@ -406,7 +413,10 @@ public class RequestClass {
             br.close();
             if (wait) {
                 TimeUnit.MILLISECONDS.sleep(1005);
-                if (achievement) getAchievements();
+                if (achievement) {
+                    getAchievements();
+                    getTotals();
+                }
             }
             return jsonString.toString();
         } catch(InterruptedException e) {
