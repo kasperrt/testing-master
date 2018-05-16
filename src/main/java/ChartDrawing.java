@@ -23,6 +23,16 @@ public class ChartDrawing extends Application {
     private HashMap<String, HashMap<String, HashMap<String, ArrayList<Long>>>> endpoints = new HashMap<>();
     private HashMap<String, HashMap<String, Long>> minMaxNumbers = new HashMap<>();
     private String filePrefix = "1525174377296";
+    private String typeSetup = "fewer-shards-two-nodes";
+
+    public ChartDrawing(String filePrefix, String typeSetup) {
+        this.filePrefix = filePrefix;
+        this.typeSetup = typeSetup;
+    }
+
+    public ChartDrawing() {
+
+    }
 
     @Override public void start(Stage stage) {
         System.out.println(filePrefix);
@@ -168,7 +178,7 @@ public class ChartDrawing extends Application {
             endpoint = endpoint.substring(1);
 
             stage.setScene(scene);
-            saveAsPng(scene, "graphs/" + endpoint.replace("/", "-") + "-" + type + ".png");
+            saveAsPng(scene, "graphs/" + typeSetup + "/" + endpoint.replace("/", "-") + "-" + type + ".png");
             //stage.show();
         }
         System.exit(1);

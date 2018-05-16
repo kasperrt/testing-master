@@ -435,12 +435,7 @@ public class TestClass {
 
     private void getAchievements() {
         setAppClock();
-        Date start = new Date();
-        HttpsURLConnection connection = getConnection("GET", achievementsPath, false, true, false);
-        boolean wait = false;
-        String returnString = getResponse(connection, wait, false, "", achievementsPath);
-        Date end = new Date();
-        printTook((wait ? end.getTime() - 1005 : end.getTime()) - start.getTime(), achievementsPath, returnString);
+
     }
 
     private void postExercises(int week) {

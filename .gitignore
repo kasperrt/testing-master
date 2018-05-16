@@ -54,3 +54,6 @@ fabric.properties
 ./runs/
 runs/
 runs/valid/
+runs/valid/*
+./runs/valid/
+./runs/valid/*
