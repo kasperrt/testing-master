@@ -20,7 +20,7 @@ public class Start {
 
     private static int THREADS = 8;
     private static int MAXWEEKS = 3;
-    private static String typeSetup = "fewer-shards-one-node";
+    private static String typeSetup = "default-shards-two-nodes-routing";
     static ArrayList<RequestClass> elementLists = new ArrayList<>();
     private static long lastEndDate = 0L;
 
@@ -36,7 +36,7 @@ public class Start {
                 }
             }
         };
-
+        Date startTesting = new Date();
         // Install the all-trusting trust manager
         SSLContext sc = SSLContext.getInstance("SSL");
         sc.init(null, trustAllCerts, new java.security.SecureRandom());
@@ -74,6 +74,8 @@ public class Start {
             System.out.println("Start ChartDrawing with id " + date);
             System.out.println(typeSetup);
             //Application.launch(ChartDrawing.class, date + "", typeSetup);
+            Date endTesting = new Date();
+            System.out.println("Whole testing took: " + ((endTesting.getTime() - startTesting.getTime()) / 1000) + " seconds.");
             System.exit(1);
 
         } catch (InterruptedException e) {
