@@ -20,7 +20,7 @@ public class Start {
 
     private static int THREADS = 8;
     private static int MAXWEEKS = 3;
-    private static String typeSetup = "default-shards-three-nodes-one-master-routing";
+    private static String typeSetup = "fewer-shards-one-node";
     static ArrayList<RequestClass> elementLists = new ArrayList<>();
     private static long lastEndDate = 0L;
 

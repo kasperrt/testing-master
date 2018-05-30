@@ -124,6 +124,7 @@ public class RequestClass {
 
         connection.setRequestProperty( "Content-Type", "application/json");
         writeInRequest(connection, sendString);
+        System.out.println("Questions to send with new plan " + sendString.toString());
         boolean wait = true;
         String jsonString = getResponse(connection, wait, false, sendString, planNextPath);
 

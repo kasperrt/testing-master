@@ -22,8 +22,8 @@ public class ChartDrawing extends Application {
 
     private HashMap<String, HashMap<String, HashMap<String, ArrayList<Long>>>> endpoints = new HashMap<>();
     private HashMap<String, HashMap<String, Long>> minMaxNumbers = new HashMap<>();
-    private String filePrefix = "1526647544735";
-    private String typeSetup = "default-shards-three-nodes-routing";
+    private String filePrefix = "1527511166536";
+    private String typeSetup = "fewer-shards-one-node";
 
     @Override public void start(Stage stage) {
         System.out.println(filePrefix);
