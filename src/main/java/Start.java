@@ -18,9 +18,11 @@ import java.util.concurrent.TimeUnit;
 
 public class Start {
 
-    private static int THREADS = 8;
+    private static int THREADS = 5;
+    private static boolean doneRemoval = false;
+    private static String thisFile;
     private static int MAXWEEKS = 3;
-    private static String typeSetup = "fewer-shards-one-node";
+    private static String typeSetup = "default-shards-one-node";
     static ArrayList<RequestClass> elementLists = new ArrayList<>();
     private static long lastEndDate = 0L;
 
@@ -43,7 +45,7 @@ public class Start {
         HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
 
         long date = (new Date()).getTime();
-        String thisFile = date + ".csv";
+        thisFile = date + ".csv";
         RequestClass firstReset = new RequestClass("test", thisFile, typeSetup);
 
         int calendarDay = 1;
@@ -247,6 +249,32 @@ public class Start {
             createUsers();
         }
 
+        if(week == 3) {
+            RequestClass newUser = new RequestClass("testing" + THREADS + 1, thisFile, typeSetup);
+            elementLists.add(newUser);
+            THREADS++;
+            try {
+                newUser.createUser();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            RequestClass newUser1 = new RequestClass("testing" + THREADS + 1, thisFile, typeSetup);
+            elementLists.add(newUser1);
+            THREADS++;
+            try {
+                newUser1.createUser();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            RequestClass newUser2 = new RequestClass("testing" + THREADS + 1, thisFile, typeSetup);
+            elementLists.add(newUser2);
+            try {
+                newUser2.createUser();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            THREADS++;
+        }
         getPlans();
         thisDate.setTime(lastEndDate);
         postExercises();
@@ -284,7 +312,21 @@ public class Start {
         }
         if(_nextDay > 6) {
             getTailoring(thisDate);
-            if(week == MAXWEEKS) return;
+            if(week == MAXWEEKS && !doneRemoval) {
+                doneRemoval = true;
+                System.out.println("Size of elementlist " + elementLists.size());
+                elementLists.remove(0);
+                elementLists.remove(0);
+                elementLists.remove(0);
+                elementLists.remove(0);
+                elementLists.remove(0);
+                THREADS = elementLists.size();
+                System.out.println("Removed 5 elements, size is now " + elementLists.size());
+                MAXWEEKS += 3;
+            } else {
+                System.out.println("Done with looping");
+                return;
+            }
             startTestPlan(week + 1);
         } else {
             goToNextHour(week, _nextDay, _nextHour, thisDate);
