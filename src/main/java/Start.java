@@ -18,11 +18,11 @@ import java.util.concurrent.TimeUnit;
 
 public class Start {
 
-    private static int THREADS = 5;
+    private static int THREADS = 1;
     private static boolean doneRemoval = false;
     private static String thisFile;
-    private static int MAXWEEKS = 3;
-    private static String typeSetup = "default-shards-one-node";
+    private static int MAXWEEKS = 5;
+    private static String typeSetup = "default-shards-one-node-one-user";
     static ArrayList<RequestClass> elementLists = new ArrayList<>();
     private static long lastEndDate = 0L;
 
@@ -68,7 +68,7 @@ public class Start {
             wait(8005);
             System.out.println("Done waiting, starting parallel requests");
             for(int i = 0; i < THREADS; i++) {
-                elementLists.add(new RequestClass("testing" + i, thisFile, typeSetup));
+                elementLists.add(new RequestClass("test-user-" + i, thisFile, typeSetup));
             }
 
             startTestPlan(0);
@@ -249,8 +249,8 @@ public class Start {
             createUsers();
         }
 
-        if(week == 3) {
-            RequestClass newUser = new RequestClass("testing" + THREADS + 1, thisFile, typeSetup);
+        /*if(week == 3) {
+            RequestClass newUser = new RequestClass("test-user-" + THREADS + 1, thisFile, typeSetup);
             elementLists.add(newUser);
             THREADS++;
             try {
@@ -258,7 +258,7 @@ public class Start {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            RequestClass newUser1 = new RequestClass("testing" + THREADS + 1, thisFile, typeSetup);
+            RequestClass newUser1 = new RequestClass("test-user-" + THREADS + 1, thisFile, typeSetup);
             elementLists.add(newUser1);
             THREADS++;
             try {
@@ -266,7 +266,7 @@ public class Start {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            RequestClass newUser2 = new RequestClass("testing" + THREADS + 1, thisFile, typeSetup);
+            RequestClass newUser2 = new RequestClass("test-user-" + THREADS + 1, thisFile, typeSetup);
             elementLists.add(newUser2);
             try {
                 newUser2.createUser();
@@ -274,7 +274,7 @@ public class Start {
                 e.printStackTrace();
             }
             THREADS++;
-        }
+        }*/
         getPlans();
         thisDate.setTime(lastEndDate);
         postExercises();
@@ -312,7 +312,7 @@ public class Start {
         }
         if(_nextDay > 6) {
             getTailoring(thisDate);
-            if(week == MAXWEEKS && !doneRemoval) {
+            /*if(week == MAXWEEKS && !doneRemoval) {
                 doneRemoval = true;
                 System.out.println("Size of elementlist " + elementLists.size());
                 elementLists.remove(0);
@@ -326,7 +326,8 @@ public class Start {
             } else {
                 System.out.println("Done with looping");
                 return;
-            }
+            }*/
+            if(week == MAXWEEKS) return;
             startTestPlan(week + 1);
         } else {
             goToNextHour(week, _nextDay, _nextHour, thisDate);
