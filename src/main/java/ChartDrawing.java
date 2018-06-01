@@ -169,7 +169,7 @@ public class ChartDrawing extends Application {
             endpoint = endpoint.substring(1);
 
             stage.setScene(scene);
-            saveAsPng(scene, "graphs/" + typeSetup + "/" + endpoint.replace("/", "-") + "-" + type + ".png");
+            saveAsPng(scene, "graphs/" + typeSetup + "/" + endpoint.replace("/", "-") + ".png");
             //stage.show();
         }
         System.exit(1);
