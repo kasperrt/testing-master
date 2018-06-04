@@ -18,11 +18,12 @@ import java.util.concurrent.TimeUnit;
 
 public class Start {
 
-    private static int THREADS = 1;
-    private static boolean doneRemoval = false;
+    private static int THREADS = 3;
+    private static int USERNUMBER = 3;
+    private static int doneRemoval = 0;
     private static String thisFile;
-    private static int MAXWEEKS = 5;
-    private static String typeSetup = "default-shards-one-node-one-user";
+    private static int MAXWEEKS = 3;
+    private static String typeSetup = "default-shards-one-node-different-start";
     static ArrayList<RequestClass> elementLists = new ArrayList<>();
     private static long lastEndDate = 0L;
 
@@ -139,6 +140,8 @@ public class Start {
 
         try {
             executorService.invokeAll(tasks);
+            executorService.shutdown();
+            tasks.clear();
             wait(1005);
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -163,6 +166,8 @@ public class Start {
                     lastEndDate = endDates.get(i);
                 }
             }
+            executorService.shutdown();
+            tasks.clear();
             wait(1005);
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -190,6 +195,8 @@ public class Start {
 
         try {
             executorService.invokeAll(tasks);
+            executorService.shutdown();
+            tasks.clear();
             //wait(1005);
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -209,6 +216,8 @@ public class Start {
 
         try {
             executorService.invokeAll(tasks);
+            executorService.shutdown();
+            tasks.clear();
             wait(1005);
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -249,32 +258,20 @@ public class Start {
             createUsers();
         }
 
-        /*if(week == 3) {
-            RequestClass newUser = new RequestClass("test-user-" + THREADS + 1, thisFile, typeSetup);
-            elementLists.add(newUser);
-            THREADS++;
-            try {
-                newUser.createUser();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        if(week == 2 || week == 4) {
+            System.out.println("Creating 3 new users");
+            for(int i = 0; i < 3; i++) {
+                RequestClass newUser = new RequestClass("test-user-" + (USERNUMBER + i + 1), thisFile, typeSetup);
+                elementLists.add(newUser);
+                try {
+                    newUser.createUser();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                USERNUMBER++;
+                THREADS = elementLists.size();
             }
-            RequestClass newUser1 = new RequestClass("test-user-" + THREADS + 1, thisFile, typeSetup);
-            elementLists.add(newUser1);
-            THREADS++;
-            try {
-                newUser1.createUser();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            RequestClass newUser2 = new RequestClass("test-user-" + THREADS + 1, thisFile, typeSetup);
-            elementLists.add(newUser2);
-            try {
-                newUser2.createUser();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            THREADS++;
-        }*/
+        }
         getPlans();
         thisDate.setTime(lastEndDate);
         postExercises();
@@ -294,7 +291,7 @@ public class Start {
         endDate.setSeconds(59);
 
         setAppClock(endDate);
-        postActivities(hour, thisDate);
+        postActivities(hour + (day * hour), thisDate);
         System.out.println("\n\n");
         System.out.println("Now " + thisDate.toString());
         System.out.println("End " + endDate.toString());
@@ -312,21 +309,21 @@ public class Start {
         }
         if(_nextDay > 6) {
             getTailoring(thisDate);
-            /*if(week == MAXWEEKS && !doneRemoval) {
-                doneRemoval = true;
+            if(week == MAXWEEKS && doneRemoval != 2) {
+                doneRemoval += 1;
                 System.out.println("Size of elementlist " + elementLists.size());
-                elementLists.remove(0);
-                elementLists.remove(0);
-                elementLists.remove(0);
-                elementLists.remove(0);
-                elementLists.remove(0);
+                for(int i = 0; i < 3; i++) {
+                    elementLists.remove(0);
+
+                }
                 THREADS = elementLists.size();
-                System.out.println("Removed 5 elements, size is now " + elementLists.size());
-                MAXWEEKS += 3;
-            } else {
+                System.out.println("Removed 3 elements, size is now " + elementLists.size());
+                MAXWEEKS += 2;
+            } else if(week == MAXWEEKS){
                 System.out.println("Done with looping");
                 return;
-            }*/
+            }
+            System.out.println(week + " " + MAXWEEKS);
             if(week == MAXWEEKS) return;
             startTestPlan(week + 1);
         } else {

@@ -193,28 +193,33 @@ public class RequestClass {
             steps = (int) activity.get("goal") + steps;
         }
 
-        for(int i = 0; i < 24; i++) {
-            if(i < 8 || i > 20) {
-                activityPlan.put(0);
-            } else {
-                int thisStep = (int) Math.floor(Math.random() * 30);
-                if(lazy) {
-                    if((int) Math.floor(Math.random() * 3) == 1) {
-                        thisStep = (steps / 14);
-                    } else {
-                        if(thisStep < (steps / 14)) {
-                            thisStep = (steps / 14) - thisStep;
-                        } else {
-                            thisStep = thisStep - (steps / 14);
-                        }
-                    }
+        System.out.println("Generating data for 7 days * 24 hours");
+        for(int d = 0; d < 7; d++) {
+            for (int i = 0; i < 24; i++) {
+                if (i < 8 || i > 20) {
+                    activityPlan.put(0);
                 } else {
-                    thisStep += (steps / 14);
+                    int thisStep = (int) Math.floor(Math.random() * 30);
+                    if (lazy) {
+                        if ((int) Math.floor(Math.random() * 3) == 1) {
+                            thisStep = (steps / 14);
+                        } else {
+                            if (thisStep < (steps / 14)) {
+                                thisStep = (steps / 14) - thisStep;
+                            } else {
+                                thisStep = thisStep - (steps / 14);
+                            }
+                        }
+                    } else {
+                        thisStep += (steps / 14);
+                    }
+                    activityPlan.put(thisStep);
+                    totalSteps += thisStep;
                 }
-                activityPlan.put(thisStep);
-                totalSteps += thisStep;
             }
         }
+
+        System.out.println("Done generating data for 7 days * 24 hours, resulting number of indexes is " + activityPlan.length());
 
         for(int i = 0; i < ((JSONArray) jsonObj.get("educations")).length(); i++) {
             ((JSONObject) ((JSONArray) jsonObj.get("educations")).get(i)).put("is_correct", true);
