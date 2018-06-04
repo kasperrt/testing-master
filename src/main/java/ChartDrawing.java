@@ -23,6 +23,7 @@ public class ChartDrawing extends Application {
     private HashMap<String, HashMap<String, HashMap<String, ArrayList<Long>>>> endpoints = new HashMap<>();
     private HashMap<String, HashMap<String, Long>> minMaxNumbers = new HashMap<>();
     private String filePrefix = "1528106505761";
+    private boolean epochXNumbering = true;
     private String typeSetup = "default-shards-one-node-different-start";
 
     @Override public void start(Stage stage) {
@@ -147,7 +148,12 @@ public class ChartDrawing extends Application {
                     if(!times.contains(epochTime)) times.add(epochTime);
 
                     //System.out.println(responseTime + " " + epochTime);
-                    XYChart.Data thisData = new XYChart.Data(i, responseTime);
+                    XYChart.Data thisData;
+                    if(epochXNumbering) {
+                        thisData = new XYChart.Data(epochTime, responseTime);
+                    } else {
+                        thisData = new XYChart.Data(i, responseTime);
+                    }
                     Rectangle rect = new Rectangle(0,0);
                     rect.setVisible(false);
                     thisData.setNode(rect);
@@ -159,9 +165,11 @@ public class ChartDrawing extends Application {
             Collections.sort(times, Collections.reverseOrder());
             //yAxis.setTickUnit(100);
 
-            /*xAxis.setAutoRanging(false);
-            xAxis.setLowerBound(times.get(0));
-            xAxis.setUpperBound(times.get(times.size() - 1));*/
+            if(epochXNumbering) {
+                xAxis.setAutoRanging(false);
+                xAxis.setLowerBound(times.get(0));
+                xAxis.setUpperBound(times.get(times.size() - 1));
+            }
 
             lineChart.setAnimated(false);
             Scene scene = new Scene(lineChart, 800, 600);
