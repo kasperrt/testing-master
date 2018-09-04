@@ -25,7 +25,7 @@ public class ChartDrawing extends Application {
     private String filePrefix = "1528106505761";
     private boolean epochXNumbering = false;
     private boolean doAverageCalculation = true;
-    private String typeSetup = "default-shards-one-node-different-start";
+    private String typeSetup = "default-shards-one-node";
 
     @Override public void start(Stage stage) {
         System.out.println(filePrefix);
