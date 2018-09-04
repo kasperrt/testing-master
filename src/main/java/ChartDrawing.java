@@ -23,7 +23,8 @@ public class ChartDrawing extends Application {
     private HashMap<String, HashMap<String, HashMap<String, ArrayList<Long>>>> endpoints = new HashMap<>();
     private HashMap<String, HashMap<String, Long>> minMaxNumbers = new HashMap<>();
     private String filePrefix = "1528106505761";
-    private boolean epochXNumbering = true;
+    private boolean epochXNumbering = false;
+    private boolean doAverageCalculation = true;
     private String typeSetup = "default-shards-one-node-different-start";
 
     @Override public void start(Stage stage) {
@@ -132,7 +133,14 @@ public class ChartDrawing extends Application {
             //defining a series
             //System.out.println(endpoint);
             //System.out.println(endpoints.get(endpoint));
+
+            ArrayList<ArrayList<Long>> averageResults = new ArrayList<>();
+
             ArrayList<Long> times = new ArrayList<>();
+
+            XYChart.Series averageSeries = new XYChart.Series();
+            averageSeries.setName("Average Responsetime");
+
             for(String user : endpoints.get(endpoint).keySet()) {
 
                 XYChart.Series series = new XYChart.Series();
@@ -140,10 +148,15 @@ public class ChartDrawing extends Application {
                 series.setName(user);
                 //populating the series with data
 
-
                 for(int i = 0; i < endpoints.get(endpoint).get(user).get("x").size(); i++) {
+                    if(averageResults.size() < i + 1) {
+                        averageResults.add(new ArrayList<Long>);
+                    }
+
                     Long responseTime = endpoints.get(endpoint).get(user).get("y").get(i);
                     Long epochTime = endpoints.get(endpoint).get(user).get("x").get(i);
+
+                    averageResults[i].add(responseTime);
 
                     if(!times.contains(epochTime)) times.add(epochTime);
 
@@ -160,8 +173,24 @@ public class ChartDrawing extends Application {
                     series.getData().add(thisData);
                     //series.getData().add(new XYChart.Data(endpoints.get(endpoint).get(user).get("x").get(i), endpoints.get(user).get("y").get(i)));
                 }
-                lineChart.getData().add(series);
+                if(!doAverageCalculation) lineChart.getData().add(series);
             }
+
+            for(int i = 0; i < averageResults.size(); i++) {
+                XYChart.Data thisDataAverage;
+                double avg = 0;
+                for(int y = 0; y < averageResults[i].size(); y++) {
+                    avg += averageResults[i][y];
+                }
+                avg = avg / averageResults[i].size();
+                thisDataAverage = new XYChart.Data(i, avg);
+
+                Rectangle rect = new Rectangle(0,0);
+                rect.setVisible(false);
+                thisDataAverage.setNode(rect);
+                averageSeries.getData().add(thisDataAverage);
+            }
+
             Collections.sort(times, Collections.reverseOrder());
             //yAxis.setTickUnit(100);
 
@@ -171,13 +200,22 @@ public class ChartDrawing extends Application {
                 xAxis.setUpperBound(times.get(times.size() - 1));
             }
 
+
+            if(doAverageCalculation) {
+                endpoint += " average";
+                lineChart.getData().add(averageSeries);
+            }
+
             lineChart.setAnimated(false);
             Scene scene = new Scene(lineChart, 800, 600);
             scene.getStylesheets().add("stylesheet.css");
             endpoint = endpoint.substring(1);
 
             stage.setScene(scene);
-            saveAsPng(scene, "graphs/" + typeSetup + "/" + endpoint.replace("/", "-") + ".png");
+            String graphName = "graphs/" + typeSetup + "/" + endpoint.replace("/", "-");
+            if(doAverageCalculation) graphName += "-average";
+
+            saveAsPng(scene, graphName + ".png");
             //stage.show();
         }
         System.exit(1);
