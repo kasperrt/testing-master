@@ -18,15 +18,21 @@ import java.util.concurrent.TimeUnit;
 public class Start {
 
     private static int THREADS = 3;
-    private static int USERNUMBER = 3;
+    private static int USERNUMBER = 8;
     private static int doneRemoval = 0;
     private static String thisFile;
     private static int MAXWEEKS = 3;
-    private static String typeSetup = "default-shards-one-node-different-start";
+    private static boolean different_start = false;
+    private static String typeSetup = "default-shards-one-node";
     static ArrayList<RequestClass> elementLists = new ArrayList<>();
     private static long lastEndDate = 0L;
 
     public static void main(String[] args) throws KeyManagementException, NoSuchAlgorithmException {
+        if(different_start) {
+            USERNUMBER = 3;
+            typeSetup += "-different-start";
+        }
+
         TrustManager[] trustAllCerts = new TrustManager[] {
             new X509TrustManager() {
                 public java.security.cert.X509Certificate[] getAcceptedIssuers() {
@@ -257,7 +263,7 @@ public class Start {
             createUsers();
         }
 
-        if(week == 2 || week == 4) {
+        if((week == 2 || week == 4) && different_start) {
             System.out.println("Creating 3 new users");
             for(int i = 0; i < 3; i++) {
                 RequestClass newUser = new RequestClass("test-user-" + (USERNUMBER + i + 1), thisFile, typeSetup);
