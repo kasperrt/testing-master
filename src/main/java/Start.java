@@ -1,4 +1,3 @@
-import javafx.application.Application;
 import org.json.JSONException;
 
 import javax.net.ssl.*;
