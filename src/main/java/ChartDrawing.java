@@ -162,13 +162,16 @@ public class ChartDrawing extends Application {
                 }
                 lineChart.getData().add(series);
             }
-            Collections.sort(times, Collections.reverseOrder());
-            //yAxis.setTickUnit(100);
 
+            //yAxis.setTickUnit(100);
+            //Collections.sort(times, Collections.reverseOrder());
             if(epochXNumbering) {
+                Collections.sort(times);
                 xAxis.setAutoRanging(false);
                 xAxis.setLowerBound(times.get(0));
                 xAxis.setUpperBound(times.get(times.size() - 1));
+            } else {
+                Collections.sort(times, Collections.reverseOrder());
             }
 
             lineChart.setAnimated(false);
