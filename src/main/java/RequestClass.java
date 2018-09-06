@@ -32,6 +32,8 @@ public class RequestClass {
     private final boolean DEBUG = true;
     private String writer;
 
+    private boolean waitForPosts = !Start.manualRefresh;
+
     /**
      * Paths
      */
@@ -80,7 +82,7 @@ public class RequestClass {
         connection.setRequestProperty( "Content-Type", "application/json");
         writeInRequest(connection, createUserValues);
 
-        boolean wait = true;
+        boolean wait = waitForPosts;
         String jsonString = getResponse(connection, wait, false, createUserValues, createUserPath);
         Date end = new Date();
         TimeUnit.MILLISECONDS.sleep(1005);
@@ -125,7 +127,7 @@ public class RequestClass {
         connection.setRequestProperty( "Content-Type", "application/json");
         writeInRequest(connection, sendString);
         System.out.println("Questions to send with new plan " + sendString.toString());
-        boolean wait = true;
+        boolean wait = waitForPosts;
         String jsonString = getResponse(connection, wait, false, sendString, planNextPath);
 
         HttpsURLConnection conn = getConnection("GET", currentPlanPath, false, true, false);
@@ -133,7 +135,9 @@ public class RequestClass {
         JSONObject currentPlanParsed = new JSONObject(currentPlan);
 
         Date end = new Date();
-        printTook((wait ? end.getTime() - 1005 : end.getTime()) - start.getTime(), planNextPath, jsonString);
+        //printTook((wait ? end.getTime() - 1005 : end.getTime()) - start.getTime(), planNextPath, jsonString);
+        printTook((end.getTime()) - start.getTime(), planNextPath, jsonString);
+
         JSONObject jsonObj = new JSONObject(jsonString);
 
         long pdate = currentPlanParsed.getLong("pdate");
@@ -242,7 +246,9 @@ public class RequestClass {
         boolean wait = false;
         String returnString = getResponse(connection, wait, false, "", tailoringPath);
         Date end = new Date();
-        printTook((wait ? end.getTime() - 1005 : end.getTime()) - start.getTime(), tailoringPath, returnString);
+        //printTook((wait ? end.getTime() - 1005 : end.getTime()) - start.getTime(), tailoringPath, returnString);
+        printTook((end.getTime()) - start.getTime(), tailoringPath, returnString);
+
         JSONArray tailoringObject = new JSONArray(returnString.toString());
 
         this.questions = new JSONObject();
@@ -314,7 +320,9 @@ public class RequestClass {
 
         String jsonString2 = getResponse(connection2, false, false, "", resetPath);
         Date end = new Date();
-        printTook((false ? end.getTime() - 1005 : end.getTime()) - start.getTime(), resetPath, jsonString2);
+        //printTook((false ? end.getTime() - 1005 : end.getTime()) - start.getTime(), resetPath, jsonString2);
+        printTook((end.getTime()) - start.getTime(), resetPath, jsonString2);
+
         System.out.println("Done resetting elasticsearch");
     }
 
@@ -341,10 +349,11 @@ public class RequestClass {
 
         writeInRequest(connection, s);
 
-        boolean wait = true;
+        boolean wait = waitForPosts;
         String jsonString = getResponse(connection, wait, true, s, path);
         Date end = new Date();
-        printTook((wait ? end.getTime() - 1005 : end.getTime()) - start.getTime(), path, jsonString);
+        //printTook((wait ? end.getTime() - 1005 : end.getTime()) - start.getTime(), path, jsonString);
+        printTook((end.getTime()) - start.getTime(), path, jsonString);
     }
 
     private void getGeneric(String path) {
@@ -353,7 +362,9 @@ public class RequestClass {
         boolean wait = false;
         String returnString = getResponse(connection, wait, false, "", path);
         Date end = new Date();
-        printTook((wait ? end.getTime() - 1005 : end.getTime()) - start.getTime(), path, returnString);
+        //printTook((wait ? end.getTime() - 1005 : end.getTime()) - start.getTime(), path, returnString);
+        printTook((end.getTime()) - start.getTime(), path, returnString);
+
     }
 
     private void getTotals() {
@@ -380,7 +391,7 @@ public class RequestClass {
                 wr.write(postData);
             }
 
-            boolean wait = true;
+            boolean wait = waitForPosts;
             String jsonString = getResponse(connection, wait, false, "", oauthPath);
 
             JSONObject jsonObj = new JSONObject(jsonString);
@@ -419,10 +430,10 @@ public class RequestClass {
             br.close();
             if (wait) {
                 TimeUnit.MILLISECONDS.sleep(1005);
-                if (achievement) {
-                    getAchievements();
-                    getTotals();
-                }
+            }
+            if (achievement) {
+                getAchievements();
+                getTotals();
             }
             return jsonString.toString();
         } catch(InterruptedException e) {

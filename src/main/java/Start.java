@@ -1,15 +1,13 @@
 import org.json.JSONException;
-
 import javax.net.ssl.*;
 import java.io.*;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.*;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -17,19 +15,23 @@ import java.util.concurrent.TimeUnit;
 
 public class Start {
 
-    private static int THREADS = 3;
+    private static int THREADS = 8;
     private static int USERNUMBER = 8;
     private static int doneRemoval = 0;
-    private static String thisFile;
+    public static String thisFile;
     private static int MAXWEEKS = 3;
     private static boolean different_start = false;
-    private static String typeSetup = "default-shards-one-node";
+    public static String typeSetup = "clustered/manual-refresh";
+    private static boolean segmenting = false;
+    public static boolean manualRefresh = true;
     static ArrayList<RequestClass> elementLists = new ArrayList<>();
     private static long lastEndDate = 0L;
+
 
     public static void main(String[] args) throws KeyManagementException, NoSuchAlgorithmException {
         if(different_start) {
             USERNUMBER = 3;
+            THREADS = 3;
             typeSetup += "-different-start";
         }
 
@@ -70,8 +72,15 @@ public class Start {
         try {
             firstReset.createUser();
             firstReset.resetElastic();
-            System.out.println("Reset, waiting 8 seconds");
-            wait(8005);
+            System.out.println("Reset, waiting 20 seconds");
+            wait(20000, true);
+
+            if(segmenting) {
+                System.out.println("Done waiting for resetting, sending segmenting now");
+                postForceMerge();
+                System.out.println("Segmenting done, waiting 20 seconds for good measure");
+                wait(20000, true);
+            }
             System.out.println("Done waiting, starting parallel requests");
             for(int i = 0; i < THREADS; i++) {
                 elementLists.add(new RequestClass("test-user-" + i, thisFile, typeSetup));
@@ -84,6 +93,10 @@ public class Start {
             //Application.launch(ChartDrawing.class, date + "", typeSetup);
             Date endTesting = new Date();
             System.out.println("Whole testing took: " + ((endTesting.getTime() - startTesting.getTime()) / 1000) + " seconds.");
+
+            ChartDrawing chart = new ChartDrawing();
+            chart.startDrawing();
+            System.out.println("Start ChartDrawing with id " + date);
             System.exit(1);
 
         } catch (InterruptedException e) {
@@ -93,6 +106,29 @@ public class Start {
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("qqq");
+        }
+    }
+
+    private static void postForceMerge() {
+        try {
+            URL url = new URL("http://localhost:9200/data_description/_forcemerge?only_expunge_deletes=false&max_num_segments=1&flush=true");
+
+            String auth = Base64.getEncoder().encodeToString(("elastic:changeme").getBytes());
+
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setDoOutput(true);
+            connection.setRequestProperty("Authorization", "Basic " + auth);
+            InputStream content = (InputStream)connection.getInputStream();
+            BufferedReader in = new BufferedReader(new InputStreamReader(content));
+            String line;
+            while((line = in.readLine()) != null) {
+                System.out.println("Response forcemerge " + line);
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -245,6 +281,20 @@ public class Start {
         }
     }
 
+    private static void wait(int milliseconds, boolean countdown) {
+        try {
+            if(countdown) {
+                wait(1000);
+                System.out.println("Waiting " + ((milliseconds - 1000) / 1000));
+                if(milliseconds - 1000 > 0) wait(milliseconds - 1000, countdown);
+            } else {
+                TimeUnit.MILLISECONDS.sleep(milliseconds);
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
     private static void startTestPlan(int week) {
         Date thisDate;
         Date endDate;
@@ -314,7 +364,7 @@ public class Start {
         }
         if(_nextDay > 6) {
             getTailoring(thisDate);
-            if(week == MAXWEEKS && doneRemoval != 2) {
+            if(week == MAXWEEKS && doneRemoval != 2 && different_start) {
                 doneRemoval += 1;
                 System.out.println("Size of elementlist " + elementLists.size());
                 for(int i = 0; i < 3; i++) {

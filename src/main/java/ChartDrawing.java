@@ -20,18 +20,27 @@ import java.util.*;
 
 public class ChartDrawing extends Application {
 
-    private HashMap<String, HashMap<String, HashMap<String, ArrayList<Long>>>> endpoints = new HashMap<>();
-    private HashMap<String, HashMap<String, Long>> minMaxNumbers = new HashMap<>();
-    private String filePrefix = "1528106505761";
+
+    public static String filePrefix = Start.thisFile;
     private boolean epochXNumbering = false;
-    private boolean doAverageCalculation = true;
-    private String typeSetup = "default-shards-one-node";
+    private boolean doAverageCalculation = false;
+    private String typeSetup = Start.typeSetup;
 
     @Override public void start(Stage stage) {
-        System.out.println(filePrefix);
+
+        drawGraphFunction(stage);
+        System.exit(1);
+    }
+
+    private void drawGraphFunction(Stage stage) {
+        HashMap<String, HashMap<String, HashMap<String, ArrayList<Long>>>> endpoints = new HashMap<>();
+        HashMap<String, HashMap<String, Long>> minMaxNumbers = new HashMap<>();
+
+        System.out.println("Graph to draw is " + filePrefix);
+
         String type = filePrefix;
 
-        String csvFile = filePrefix + ".csv";
+        String csvFile = filePrefix;
         BufferedReader br = null;
         String line;
         String csvSplitByFirst = "@";
@@ -101,7 +110,7 @@ public class ChartDrawing extends Application {
 
         for(String endpoint : endpoints.keySet()) {
 
-            stage.setTitle(endpoint);
+            stage.setTitle(endpoint + " - " + typeSetup);
             //defining the axes
 
             double range = minMaxNumbers.get(endpoint).get("max") - minMaxNumbers.get(endpoint).get("min");
@@ -128,7 +137,7 @@ public class ChartDrawing extends Application {
             LineChart<Number, Number> lineChart =
                     new LineChart<Number, Number>(xAxis, yAxis);
 
-            lineChart.setTitle(endpoint);
+            lineChart.setTitle(endpoint + " - " + typeSetup);
             lineChart.getStyleClass().add("thick-chart");
             //defining a series
             //System.out.println(endpoint);
@@ -150,13 +159,13 @@ public class ChartDrawing extends Application {
 
                 for(int i = 0; i < endpoints.get(endpoint).get(user).get("x").size(); i++) {
                     if(averageResults.size() < i + 1) {
-                        averageResults.add(new ArrayList<Long>);
+                        averageResults.add(new ArrayList<Long>());
                     }
 
                     Long responseTime = endpoints.get(endpoint).get(user).get("y").get(i);
                     Long epochTime = endpoints.get(endpoint).get(user).get("x").get(i);
 
-                    averageResults[i].add(responseTime);
+                    averageResults.get(i).add(responseTime);
 
                     if(!times.contains(epochTime)) times.add(epochTime);
 
@@ -180,10 +189,11 @@ public class ChartDrawing extends Application {
             for(int i = 0; i < averageResults.size(); i++) {
                 XYChart.Data thisDataAverage;
                 double avg = 0;
-                for(int y = 0; y < averageResults[i].size(); y++) {
-                    avg += averageResults[i][y];
+                for(int y = 0; y < averageResults.get(i).size(); y++) {
+                    avg += averageResults.get(i).get(y);
                 }
-                avg = avg / averageResults[i].size();
+                //System.out.println(endpoint + " " + avg + " " + averageResults.get(i).size());
+                avg = avg / averageResults.get(i).size();
                 thisDataAverage = new XYChart.Data(i, avg);
 
                 Rectangle rect = new Rectangle(0,0);
@@ -206,6 +216,26 @@ public class ChartDrawing extends Application {
                 Collections.sort(times, Collections.reverseOrder());
             }
 
+            double yAxisUpper = 10000;
+
+            if(endpoint.equals("/patient/achievements") || endpoint.equals("/patient/totals")) {
+                yAxisUpper = 200;
+                yAxis.setTickUnit(10);
+            } else if(endpoint.equals("/patient/activity")) {
+                yAxisUpper = 3000;
+                yAxis.setTickUnit(150);
+            } else if(endpoint.equals("/patient/plan/next")) {
+                yAxisUpper = 10000;
+                yAxis.setTickUnit(500);
+            } else if(endpoint.equals("/patient/plan/tailoring") || endpoint.equals("/patient/plan/updateuser/exercise")) {
+                yAxisUpper = 2500;
+                yAxis.setTickUnit(125);
+            } else if(endpoint.equals("/patient/plan/updateuser/education")) {
+                yAxisUpper = 1500;
+                yAxis.setTickUnit(75);
+            }
+            yAxis.setUpperBound(yAxisUpper);
+
 
             if(doAverageCalculation) {
                 endpoint += " average";
@@ -222,9 +252,16 @@ public class ChartDrawing extends Application {
             if(doAverageCalculation) graphName += "-average";
 
             saveAsPng(scene, graphName + ".png");
+
             //stage.show();
         }
-        System.exit(1);
+        if(!doAverageCalculation) {
+            doAverageCalculation = true;
+            drawGraphFunction(stage);
+        } else {
+            System.out.println("Done drawing chart from " + filePrefix);
+            System.exit(1);
+        }
     }
 
     public void saveAsPng(Scene scene, String path) {
@@ -237,8 +274,8 @@ public class ChartDrawing extends Application {
         }
     }
 
-    public void startDrawing(String timestamp) {
-        this.filePrefix = timestamp;
+    public void startDrawing() {
+        //this.filePrefix = timestamp;
         launch();
     }
 
