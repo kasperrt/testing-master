@@ -15,8 +15,8 @@ import java.util.concurrent.TimeUnit;
 
 public class Start {
 
-    private static int THREADS = 8;
-    private static int USERNUMBER = 8;
+    private static int THREADS = 20;
+    private static int USERNUMBER = 20;
     private static int doneRemoval = 0;
     public static String thisFile;
     private static int MAXWEEKS = 3;
@@ -26,6 +26,7 @@ public class Start {
     public static boolean manualRefresh = true;
     static ArrayList<RequestClass> elementLists = new ArrayList<>();
     private static long lastEndDate = 0L;
+    public static final String queryUrl = "localhost";
 
 
     public static void main(String[] args) throws KeyManagementException, NoSuchAlgorithmException {
@@ -111,7 +112,7 @@ public class Start {
 
     private static void postForceMerge() {
         try {
-            URL url = new URL("http://localhost:9200/data_description/_forcemerge?only_expunge_deletes=false&max_num_segments=1&flush=true");
+            URL url = new URL("http://" + queryUrl + ":9200/data_description/_forcemerge?only_expunge_deletes=false&max_num_segments=1&flush=true");
 
             String auth = Base64.getEncoder().encodeToString(("elastic:changeme").getBytes());
 
@@ -135,7 +136,7 @@ public class Start {
     private static void setAppClock(Date nowDate) {
         URL url = null;
         try {
-            url = new URL("https://localhost/clock/" + nowDate.getTime());
+            url = new URL("https://" + queryUrl + "/clock/" + nowDate.getTime());
             HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
             connection.setDoOutput(true);
             connection.setRequestMethod("GET");

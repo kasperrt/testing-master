@@ -23,7 +23,7 @@ public class RequestClass {
     private String password = "changeme";
     private String client = "my-trusted-client";
     private String secret = "secret";
-    private String host = "localhost";
+    private String host = Start.queryUrl;
     private String http = "https://";
     private String scope = "read+trust+write";
     private String grantType = "password";
