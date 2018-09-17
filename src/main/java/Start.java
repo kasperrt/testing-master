@@ -15,8 +15,8 @@ import java.util.concurrent.TimeUnit;
 
 public class Start {
 
-    private static int THREADS = 20;
-    private static int USERNUMBER = 20;
+    private static int THREADS = 1;
+    private static int USERNUMBER = 1;
     private static int doneRemoval = 0;
     public static String thisFile;
     private static int MAXWEEKS = 3;
@@ -26,8 +26,37 @@ public class Start {
     public static boolean manualRefresh = true;
     static ArrayList<RequestClass> elementLists = new ArrayList<>();
     private static long lastEndDate = 0L;
-    public static final String queryUrl = "localhost";
+    public static final String queryUrl = "10.53.43.122";
 
+
+    private static void disableSSL() {
+        try {
+            TrustManager[] trustAllCerts = new TrustManager[] {
+                    new X509TrustManager() {
+                        public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                            return null;
+                        }
+                        public void checkClientTrusted(X509Certificate[] certs, String authType) {
+                        }
+                        public void checkServerTrusted(X509Certificate[] certs, String authType) {
+                        }
+                    }
+            };
+
+            // Install the all-trusting trust manager
+            SSLContext sc = SSLContext.getInstance("SSL");
+            sc.init(null, trustAllCerts, new java.security.SecureRandom());
+            HostnameVerifier allHostsValid = new HostnameVerifier() {
+                public boolean verify(String hostname, SSLSession session) {
+                    return true;
+                }
+            };
+            HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
+            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public static void main(String[] args) throws KeyManagementException, NoSuchAlgorithmException {
         if(different_start) {
@@ -36,22 +65,10 @@ public class Start {
             typeSetup += "-different-start";
         }
 
-        TrustManager[] trustAllCerts = new TrustManager[] {
-            new X509TrustManager() {
-                public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-                    return null;
-                }
-                public void checkClientTrusted(X509Certificate[] certs, String authType) {
-                }
-                public void checkServerTrusted(X509Certificate[] certs, String authType) {
-                }
-            }
-        };
+
         Date startTesting = new Date();
-        // Install the all-trusting trust manager
-        SSLContext sc = SSLContext.getInstance("SSL");
-        sc.init(null, trustAllCerts, new java.security.SecureRandom());
-        HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+
+        disableSSL();
 
         long date = (new Date()).getTime();
         thisFile = date + ".csv";
