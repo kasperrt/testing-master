@@ -28,7 +28,7 @@ public class RequestClass {
     private String scope = "read+trust+write";
     private String grantType = "password";
     private String[] skipArray = {"easy", "hard", "pain", "unclear"};
-    private String createUserValues = "{ \"construct_next\": 26, \"p02_q01\": { \"value\": \"55\" }, \"p02_q02\": { \"value\": \"0\" }, \"p02_q03\": { \"value\": \"180\" }, \"construct_p02_q03_ft\": { \"value\": \"\" }, \"construct_p02_q03_in\": { \"value\": \"\" }, \"p02_q04\": { \"value\": \"80\" }, \"construct_p02_q04_st\": { \"value\": \"\" }, \"construct_p02_q04_lb\": { \"value\": \"\" }, \"construct_p02_typeUnits\": { \"value\": \"SI\" }, \"p03_q01\": { \"value\": \"0\" }, \"p03_q02\": { \"value\": 0 }, \"p03_q03\": { \"value\": 0 }, \"p03_q04\": { \"value\": \"1\" }, \"p03_q05\": { \"value\": \"1\" }, \"p03_q06\": { \"value\": 0 }, \"p03_q07\": { \"value\": 0 }, \"p04_q1\": { \"value\": \"18\", \"describe\": \"Norwegian\" }, \"p05_q01\": { \"value\": \"1\" }, \"p06_q01\": { \"value\": \"0\" }, \"p08_q01\": { \"value\": \"3\" }, \"p08_q02\": { \"value\": \"8\" }, \"p09_q01\": { \"value\": \"3\" }, \"p10_q01\": { \"value\": \"4\" }, \"p11_q01\": { \"value\": \"0\" }, \"p11_q02\": { \"value\": \"1\" }, \"p12_q01\": { \"value\": \"0\" }, \"p13_q01\": { \"value\": \"1\" }, \"p13_q02\": { \"value\": \"0\" }, \"p13_q03\": { \"value\": \"1\" }, \"p13_q04\": { \"value\": \"0\" }, \"p13_q05\": { \"value\": \"1\" }, \"p13_q06\": { \"value\": \"0\" }, \"p13_q07\": { \"value\": \"1\" }, \"p13_q08\": { \"value\": \"0\" }, \"p13_q09\": { \"value\": \"1\" }, \"p13_q10\": { \"value\": \"0\" }, \"p13_q11\": { \"value\": \"1\" }, \"p13_q12\": { \"value\": \"0\" }, \"p13_q13\": { \"value\": \"1\" }, \"p13_q14\": { \"value\": \"0\" }, \"p13_q15\": { \"value\": \"1\" }, \"p13_q16\": { \"value\": \"0\" }, \"p13_q17\": { \"value\": \"1\" }, \"p13_q18\": { \"value\": \"0\" }, \"p13_q19\": { \"value\": \"1\" }, \"p13_q20\": { \"value\": \"0\" }, \"p13_q21\": { \"value\": \"1\" }, \"p13_q22\": { \"value\": \"0\" }, \"p13_q23\": { \"value\": \"1\" }, \"p13_q24\": { \"value\": \"0\" }, \"p14_q01\": { \"value\": \"5\" }, \"p15_q01\": { \"value\": \"1\" }, \"p16_q01\": { \"value\": \"0\" }, \"p16_q02\": { \"value\": \"1\" }, \"p16_q03\": { \"value\": \"2\" }, \"p16_q04\": { \"value\": \"3\" }, \"p16_q05\": { \"value\": \"4\" }, \"p17_q01\": { \"value\": \"0\" }, \"p17_q02\": { \"value\": \"1\" }, \"p17_q03\": { \"value\": \"2\" }, \"p17_q04\": { \"value\": \"3\" }, \"p17_q05\": { \"value\": \"4\" }, \"p17_q06\": { \"value\": \"5\" }, \"p17_q07\": { \"value\": \"6\" }, \"p17_q08\": { \"value\": \"0\" }, \"p17_q09\": { \"value\": \"1\" }, \"p17_q10\": { \"value\": \"2\" }, \"p18_q01\": { \"value\": \"0\" }, \"p18_q02\": { \"value\": \"1\" }, \"p18_q03\": { \"value\": \"2\" }, \"p18_q04\": { \"value\": \"3\" }, \"p18_q05\": { \"value\": \"4\" }, \"p18_q06\": { \"value\": \"5\" }, \"p18_q07\": { \"value\": \"6\" }, \"p18_q08\": { \"value\": \"7\" }, \"p07_q01\": { \"value\": \"0\" }, \"p19_q01\": { \"value\": \"Gaming\", \"scale\": \"3\" }, \"p19_q02\": { \"value\": \"Eating\", \"scale\": \"5\" }, \"p20_q01\": { \"value\": \"1\" }, \"p20_q02\": { \"value\": 0 }, \"p20_q03\": { \"value\": 0 }, \"p20_q04\": { \"value\": \"1\" }, \"p20_q05\": { \"value\": 0 }, \"p20_q06\": { \"value\": 0 }, \"p20_q07\": { \"value\": 0 }, \"p20_q08\": { \"value\": \"1\" }, \"p20_q09\": { \"value\": 0 }, \"p21_q01\": { \"value\": 0 }, \"p21_q02\": { \"value\": 0 }, \"p21_q03\": { \"value\": 0 }, \"p21_q04\": { \"value\": 0 }, \"p21_q05\": { \"value\": 0 }, \"p21_q06\": { \"value\": 0 }, \"p21_q07\": { \"value\": 0 }, \"p21_q08\": { \"value\": 0 }, \"p21_q09\": { \"value\": 0 }, \"p21_q10\": { \"value\": 0 }, \"p21_q11\": { \"value\": 0 }, \"p21_q12\": { \"value\": 0 }, \"p21_q13\": { \"value\": 0 }, \"p21_q14\": { \"value\": 0 }, \"p21_q15\": { \"value\": 0 }, \"p21_q16\": { \"value\": 0 }, \"p21_q17\": { \"value\": \"Hello World!\" }, \"p21_q18\": { \"value\": \"\" }, \"p22_q01\": { \"value\": \"0\" }, \"p22_q02\": { \"value\": \"1\" }, \"p22_q03\": { \"value\": \"2\" }, \"p22_q04\": { \"value\": \"3\" }, \"p22_q05\": { \"value\": \"4\" }, \"p23_q01\": { \"value\": \"52\" }, \"p24_q01\": { \"value\": \"0\" }, \"p24_q02\": { \"value\": \"1\" }, \"p24_q03\": { \"value\": \"2\" }, \"p24_q04\": { \"value\": \"0\" }, \"p25_q01\": { \"value\": \"0\" }, \"p25_q02\": { \"value\": \"1\" }, \"p25_q03\": { \"value\": \"2\" }, \"p25_q04\": { \"value\": \"3\" }, \"p25_q05\": { \"value\": \"4\" }, \"p25_q06\": { \"value\": \"0\" }, \"p25_q07\": { \"value\": \"1\" }, \"p25_q08\": { \"value\": \"2\" }, \"p25_q09\": { \"value\": \"3\" }, \"p25_q10\": { \"value\": \"4\" }, \"p26_q01\": { \"value\": \"0\" }, \"p26_q02\": { \"value\": \"1\" }, \"p26_q03\": { \"value\": \"2\" }, \"p26_q04\": { \"value\": \"3\" }, \"p26_q05\": { \"value\": \"0\" }, \"p26_q06\": { \"value\": \"1\" }, \"p26_q07\": { \"value\": \"2\" }, \"p26_q08\": { \"value\": \"3\" } }";
+    private String createUserValues = "{\"construct_next\": 26,\"date_completed\":\"2018-08-12 12:45:01\",\"p02_q01\": {\"value\": \"55\"},\"p02_q02\": {\"value\": \"0\"},\"p02_q03\": {\"value\": \"180\"},\"construct_p02_q03_ft\": {\"value\":\"\"},\"construct_p02_q03_in\": {\"value\": \"\"},\"p02_q04\": {\"value\": \"80\"},\"construct_p02_q04_st\": {\"value\": \"\"},\"construct_p02_q04_lb\": {\"value\": \"\"},\"construct_p02_typeUnits\": {\"value\": \"SI\"},\"p03_q01\": {\"value\": \"0\"},\"p03_q02\": {\"value\": 0},\"p03_q03\": {\"value\": 0},\"p03_q04\": {\"value\": \"1\"},\"p03_q05\": {\"value\": \"1\"},\"p03_q06\": {\"value\": 0},\"p03_q07\": {\"value\": 0},\"p04_q1\":{\"value\": \"18\",\"describe\": \"Norwegian\"},\"p05_q01\": {\"value\": \"1\"},\"p06_q01\": {\"value\": \"0\"},\"p07_q01\": {\"value\": \"0\"},\"p08_q01\": {\"value\": \"3\"},\"p08_q02\": {\"value\": \"8\"},\"p09_q01\": {\"value\": \"3\"},\"p10_q01\": {\"value\": \"4\"},\"p11_q01\": {\"value\": \"0\"},\"p11_q02\": {\"value\": \"1\"},\"p12_q01\": {\"value\": \"0\"},\"p13_q01\": {\"value\": \"1\"},\"p13_q02\": {\"value\": \"0\"},\"p13_q03\": {\"value\": \"1\"},\"p13_q04\": {\"value\": \"0\"},\"p13_q05\": {\"value\": \"1\"},\"p13_q06\": {\"value\": \"0\"},\"p13_q07\": {\"value\": \"1\"},\"p13_q08\": {\"value\": \"0\"},\"p13_q09\": {\"value\": \"1\"},\"p13_q10\": {\"value\": \"0\"},\"p13_q11\": {\"value\": \"1\"},\"p13_q12\": {\"value\": \"0\"},\"p13_q13\": {\"value\": \"1\"},\"p13_q14\": {\"value\": \"0\"},\"p13_q15\": {\"value\": \"1\"},\"p13_q16\": {\"value\": \"0\"},\"p13_q17\": {\"value\": \"1\"},\"p13_q18\": {\"value\": \"0\"},\"p13_q19\": {\"value\": \"1\"},\"p13_q20\": {\"value\": \"0\"},\"p13_q21\": {\"value\": \"1\"},\"p13_q22\": {\"value\": \"0\"},\"p13_q23\": {\"value\": \"1\"},\"p13_q24\": {\"value\": \"0\"},\"p14_q01\": {\"value\": \"5\"},\"p15_q01\": {\"value\": \"1\"},\"p16_q01\": {\"value\": \"0\"},\"p16_q02\": {\"value\": \"1\"},\"p16_q03\": {\"value\": \"2\"},\"p16_q04\": {\"value\": \"3\"},\"p16_q05\": {\"value\": \"4\"},\"p17_q01\": {\"value\": \"0\"},\"p17_q02\": {\"value\": \"1\"},\"p17_q03\": {\"value\": \"2\"},\"p17_q04\": {\"value\": \"3\"},\"p17_q05\": {\"value\": \"4\"},\"p17_q06\": {\"value\": \"5\"},\"p17_q07\": {\"value\": \"6\"},\"p17_q08\": {\"value\": \"0\"},\"p17_q09\": {\"value\": \"1\"},\"p17_q10\": {\"value\": \"2\"},\"p18_q01\": {\"value\": \"0\"},\"p18_q02\": {\"value\": \"1\"},\"p18_q03\": {\"value\": \"2\"},\"p18_q04\": {\"value\": \"3\"},\"p18_q05\": {\"value\": \"4\"},\"p18_q06\": {\"value\": \"5\"},\"p18_q07\": {\"value\": \"6\"},\"p18_q08\": {\"value\": \"7\"},\"p19_q01\": {\"value\": \"Gaming\",\"scale\": \"3\"},\"p19_q02\": {\"value\": \"Eating\",\"scale\": \"5\"},\"p20_q01\": {\"value\": \"1\"},\"p20_q02\": {\"value\": 0},\"p20_q03\": {\"value\": 0},\"p20_q04\": {\"value\": \"1\"},\"p20_q05\": {\"value\": 0},\"p20_q06\": {\"value\": 0},\"p20_q07\": {\"value\": 0},\"p20_q08\": {\"value\": \"1\"},\"p20_q09\": {\"value\": 0},\"p21_q01\": {\"value\": 0},\"p21_q02\": {\"value\": 0},\"p21_q03\":{\"value\": 0},\"p21_q04\": {\"value\": 0},\"p21_q05\": {\"value\": 0},\"p21_q06\": {\"value\": 0},\"p21_q07\": {\"value\": 0},\"p21_q08\": {\"value\": 0},\"p21_q09\": {\"value\": 0},\"p21_q10\": {\"value\": 0},\"p21_q11\": {\"value\": 0},\"p21_q12\": {\"value\": 0},\"p21_q13\": {\"value\": 0},\"p21_q14\": {\"value\": 0},\"p21_q15\": {\"value\": 0},\"p21_q16\": {\"value\": 0},\"p21_q17\": {\"value\": \"0\"},\"p21_q18\": {\"value\": \"Hello World!\"},\"p21_q19\": {\"value\": 0},\"p22_q01\": {\"value\": \"0\"},\"p22_q02\": {\"value\": \"1\"},\"p22_q03\": {\"value\": \"2\"},\"p22_q04\": {\"value\": \"3\"},\"p22_q05\": {\"value\":\"4\"},\"p23_q01\": {\"value\": \"52\"},\"p24_q01\": {\"value\": \"0\"},\"p24_q02\": {\"value\": \"1\"},\"p24_q03\": {\"value\": \"2\"},\"p24_q04\": {\"value\": \"0\"},\"p25_q01\": {\"value\": \"0\"},\"p25_q02\": {\"value\": \"1\"},\"p25_q03\": {\"value\": \"2\"},\"p25_q04\": {\"value\": \"3\"},\"p25_q05\": {\"value\": \"4\"},\"p25_q06\": {\"value\": \"0\"},\"p25_q07\": {\"value\": \"1\"},\"p25_q08\": {\"value\": \"2\"},\"p25_q09\": {\"value\": \"3\"},\"p25_q10\": {\"value\": \"4\"},\"p26_q01\": {\"value\": \"0\"},\"p26_q02\": {\"value\": \"1\"},\"p26_q03\": {\"value\": \"2\"},\"p26_q04\": {\"value\": \"3\"},\"p26_q05\": {\"value\": \"0\"},\"p26_q06\": {\"value\": \"1\"},\"p26_q07\": {\"value\": \"2\"},\"p26_q08\": {\"value\": \"3\"}}";
     private final boolean DEBUG = true;
     private String writer;
 
@@ -77,6 +77,7 @@ public class RequestClass {
     public void createUser() throws InterruptedException {
         System.out.println("Creating user " + username);
         Date start = new Date();
+        getAdminAccessToken();
         HttpsURLConnection connection = getConnection("POST", createUserPath + username, true, true, false);
 
         connection.setRequestProperty( "Content-Type", "application/json");
@@ -114,14 +115,23 @@ public class RequestClass {
         System.out.println("Posted activity on user " + username);
     }
 
-    public long postNewPlan() throws JSONException {
+    public ArrayList<Long> postNewPlan(long dateTime) throws JSONException {
         Date start = new Date();
         System.out.println("Start new plan for user " + username);
         HttpsURLConnection connection = getConnection("POST", planNextPath, true, true, false);
 
         String sendString = "";
         if(this.questions.length() != 0) {
+            questions.put("type", "tailoring");
+            questions.put("date", dateTime);
             sendString = questions.toString();
+        } else if(false) {
+            /*JSONObject toSend = new JSONObject();
+            toSend.put("date", dateTime);
+            toSend.put("type", "baseline");
+            toSend.put("questions", (new JSONArray()).toString());
+
+            sendString = toSend.toString();*/
         }
 
         connection.setRequestProperty( "Content-Type", "application/json");
@@ -133,7 +143,7 @@ public class RequestClass {
         HttpsURLConnection conn = getConnection("GET", currentPlanPath, false, true, false);
         String currentPlan = getResponse(conn, true, false, "", currentPlanPath);
         JSONObject currentPlanParsed = new JSONObject(currentPlan);
-
+        System.out.println("New plan " + currentPlanParsed.toString());
         Date end = new Date();
         //printTook((wait ? end.getTime() - 1005 : end.getTime()) - start.getTime(), planNextPath, jsonString);
         printTook((end.getTime()) - start.getTime(), planNextPath, jsonString);
@@ -155,7 +165,7 @@ public class RequestClass {
             int setDuration = (int) (Math.floor(Math.random() * (Math.abs((int) thisObject.get("set_duration_s") + 20))) + 1);
             thisToAdd.put("randomsetduration", setDuration);
             thisToAdd.put("setduration", (int) thisObject.get("set_duration_s"));
-            Date d = (new Date((long) jsonObj.get("date")));
+            Date d = (new Date(pdate + (length - 345600000)));
             d.setHours(12 + (i * (10 / numberExercises)));
             thisToAdd.put("performed", d.getTime());
 
@@ -185,6 +195,7 @@ public class RequestClass {
             thisToAdd.put("repsperformed2", _2);
             thisToAdd.put("repsperformed3", _3);
             this.exercisePlan.put(thisToAdd);
+            System.out.println("Exercise-plan " + exercisePlan);
         }
 
         // Creating steps array
@@ -234,7 +245,10 @@ public class RequestClass {
         //long pdate = (long) currentPlanParsed.get("pdate");
         //long length = (long) currentPlanParsed.get("length");
         System.out.println("New plan posted on user " + username);
-        return pdate + length;
+        ArrayList<Long> toReturn = new ArrayList<>();
+        toReturn.add(pdate);
+        toReturn.add(length);
+        return toReturn;
     }
 
     public void getTailoring(Date thisDate) throws InterruptedException, JSONException {
@@ -285,6 +299,7 @@ public class RequestClass {
             }
             questionArray.put(thisToSend);
         }
+        this.questions.put("type", "tailoring");
         this.questions.put("questions", questionArray);
         System.out.println("Got tailoring questions for user " + username);
     }
@@ -299,6 +314,7 @@ public class RequestClass {
         System.out.println("Posting exercises for user " + username);
         postRequest(getConnection("POST", exercisePath, true, true, false), exercisePlan.toString(), exercisePath);
         System.out.println("Posted exercises for user " + username);
+        this.exercisePlan = new JSONArray();
     }
 
     public void getAchievements() {
@@ -309,7 +325,8 @@ public class RequestClass {
 
     public void resetElastic() throws IOException, JSONException, InterruptedException {
         System.out.println("Resetting elasticsearch with user " + username);
-        if(tokenType.equals("") || accessToken.equals("")) getAccessToken();
+        //if(tokenType.equals("") || accessToken.equals("")) getAccessToken();
+        getAdminAccessToken();
         Date start = new Date();
         HttpsURLConnection connection1 = getConnection("GET", "/init/reset_static", false, true, false);
 
@@ -334,6 +351,7 @@ public class RequestClass {
     private void printTook(long tookTime, String path, String response) {
         String toWrite = username + "@" + (new Date()).getTime() + "@" + tookTime + "@" + path + "@" + response;
         try {
+            //System.out.println("runs/valid/" + typeSetup + "/" + writer);
             final Path filePath = Paths.get("runs/valid/" + typeSetup + "/" + writer);
             Files.write(filePath, Arrays.asList(toWrite), StandardCharsets.UTF_8,
                     Files.exists(filePath) ? StandardOpenOption.APPEND : StandardOpenOption.CREATE);
@@ -371,6 +389,41 @@ public class RequestClass {
         System.out.println("Getting totals for user " + username);
         getGeneric(totalsPath);
         System.out.println("Got totals for user " + username);
+    }
+
+    private void getAdminAccessToken() {
+        try {
+            System.out.println("Getting admin accesstoken");
+            String urlParameters =
+                    "scope=" + scope + "&" +
+                            "grant_type=" + grantType + "&" +
+                            "username=admin&" +
+                            "password=changeme";
+            byte[] postData = urlParameters.getBytes(StandardCharsets.UTF_8);
+            Date start = new Date();
+            HttpsURLConnection connection = getConnection("POST", oauthPath, false, true, true);
+
+            connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            connection.setUseCaches(false);
+            try (DataOutputStream wr = new DataOutputStream(connection.getOutputStream())) {
+                wr.write(postData);
+            }
+
+            boolean wait = waitForPosts;
+            String jsonString = getResponse(connection, wait, false, "", oauthPath);
+
+            JSONObject jsonObj = new JSONObject(jsonString);
+            accessToken = jsonObj.getString("access_token");
+            tokenType = jsonObj.getString("token_type");
+            tokenType = tokenType.substring(0, 1).toUpperCase() + tokenType.substring(1);
+            Date end = new Date();
+            //printTook((wait ? end.getTime() - 1005 : end.getTime()) - start.getTime(), oauthPath, jsonString);
+            System.out.println("Got accesstoken for user " + username);
+        } catch(IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     private void getAccessToken() {

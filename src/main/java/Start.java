@@ -15,15 +15,15 @@ import java.util.concurrent.TimeUnit;
 
 public class Start {
 
-    private static int THREADS = 8;
-    private static int USERNUMBER = 8;
+    private static int THREADS = 1;
+    private static int USERNUMBER = 1;
     private static int doneRemoval = 0;
     public static String thisFile;
-    private static int MAXWEEKS = 3;
+    private static int MAXWEEKS = 1;
     private static boolean different_start = false;
     public static String typeSetup = "clustered/manual-refresh";
-    private static boolean segmenting = false;
-    public static boolean manualRefresh = true;
+    private static boolean segmenting = typeSetup.contains("segmenting");
+    public static boolean manualRefresh = typeSetup.contains("manual-refresh");
     static ArrayList<RequestClass> elementLists = new ArrayList<>();
     private static long lastEndDate = 0L;
 
@@ -34,6 +34,10 @@ public class Start {
             THREADS = 3;
             typeSetup += "-different-start";
         }
+
+        System.out.println("Segmenting: " + segmenting);
+        System.out.println("Manual-refresh: " + manualRefresh);
+        System.out.println("Type run: " + typeSetup);
 
         TrustManager[] trustAllCerts = new TrustManager[] {
             new X509TrustManager() {
@@ -63,7 +67,7 @@ public class Start {
         thisDate = c.getTime();
         System.out.println(thisDate.getTime());
         thisDate.setTime(thisDate.getTime() - 31556926000L);
-        thisDate.setHours(2);
+        thisDate.setHours(0);
         thisDate.setMinutes(0);
         thisDate.setSeconds(0);
 
@@ -94,8 +98,8 @@ public class Start {
             Date endTesting = new Date();
             System.out.println("Whole testing took: " + ((endTesting.getTime() - startTesting.getTime()) / 1000) + " seconds.");
 
-            ChartDrawing chart = new ChartDrawing();
-            chart.startDrawing();
+            //ChartDrawing chart = new ChartDrawing();
+            //chart.startDrawing();
             System.out.println("Start ChartDrawing with id " + date);
             System.exit(1);
 
@@ -189,13 +193,17 @@ public class Start {
         }
     }
 
-    private static void getPlans() {
+    private static void getPlans(Date thisDate) {
         final ExecutorService executorService = Executors.newFixedThreadPool(THREADS);
         final ArrayList<Callable<String>> tasks = new ArrayList<>();
         final ArrayList<Long> endDates = new ArrayList<>();
         for(RequestClass element : elementLists) {
             tasks.add(() -> {
-                endDates.add(element.postNewPlan());
+                ArrayList<Long> thisEndTime = element.postNewPlan(thisDate.getTime());
+                endDates.add(thisEndTime.get(0));
+                Date endDate = new Date();
+                endDate.setTime(thisEndTime.get(0) + thisEndTime.get(1));
+                System.out.println("Supposed end-date " + endDate.toString());
                 return "";
             });
         }
@@ -327,8 +335,13 @@ public class Start {
                 THREADS = elementLists.size();
             }
         }
-        getPlans();
+        getPlans(thisDate);
         thisDate.setTime(lastEndDate);
+        System.out.println(lastEndDate);
+        System.out.println(thisDate);
+        System.out.println("hour " + thisDate.getHours());
+        System.out.println("minutes " + thisDate.getMinutes());
+        System.out.println("seconds " + thisDate.getSeconds());
         postExercises();
         postEducation();
 
@@ -345,7 +358,7 @@ public class Start {
         endDate.setMinutes(59);
         endDate.setSeconds(59);
 
-        setAppClock(endDate);
+        setAppClock(thisDate);
         postActivities(hour + (day * hour), thisDate);
         System.out.println("\n\n");
         System.out.println("Now " + thisDate.toString());
