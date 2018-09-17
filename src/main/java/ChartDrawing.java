@@ -21,15 +21,15 @@ import java.util.*;
 public class ChartDrawing extends Application {
 
 
-    public static String filePrefix = "1536740643337.csv";
+    public static String filePrefix = Start.thisFile;
     private boolean epochXNumbering = false;
     private boolean doAverageCalculation = false;
     private String typeSetup = Start.typeSetup;
 
 
     @Override public void start(Stage stage) {
-        typeSetup = "non-clustered/segmenting-routing-fewer-shards-manual-refresh";
-        filePrefix = "1536238123962.csv";
+        //typeSetup = "non-clustered/segmenting-routing-fewer-shards-manual-refresh";
+        //filePrefix = "1536238123962.csv";
         drawGraphFunction(stage);
         System.exit(1);
     }

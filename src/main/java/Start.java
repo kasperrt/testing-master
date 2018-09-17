@@ -15,8 +15,8 @@ import java.util.concurrent.TimeUnit;
 
 public class Start {
 
-    private static int THREADS = 8;
-    private static int USERNUMBER = 8;
+    private static int THREADS = 20;
+    private static int USERNUMBER = 20;
     private static int doneRemoval = 0;
     public static String thisFile;
     private static int MAXWEEKS = 3;
@@ -27,6 +27,7 @@ public class Start {
     static ArrayList<RequestClass> elementLists = new ArrayList<>();
     private static long lastEndDate = 0L;
     public static final String queryUrl = "10.53.43.122";
+    private static long planLength = 0L;
 
 
     private static void disableSSL() {
@@ -84,7 +85,7 @@ public class Start {
         thisDate = c.getTime();
         System.out.println(thisDate.getTime());
         thisDate.setTime(thisDate.getTime() - 31556926000L);
-        thisDate.setHours(0);
+        thisDate.setHours(2);
         thisDate.setMinutes(0);
         thisDate.setSeconds(0);
 
@@ -394,6 +395,7 @@ public class Start {
         }
         if(_nextDay > 6) {
             getTailoring(thisDate);
+            setAppClock(thisDate);
             if(week == MAXWEEKS && doneRemoval != 2 && different_start) {
                 doneRemoval += 1;
                 System.out.println("Size of elementlist " + elementLists.size());
