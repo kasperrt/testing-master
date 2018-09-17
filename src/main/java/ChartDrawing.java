@@ -1,20 +1,20 @@
 import javafx.application.Application;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Scene;
-import javafx.scene.chart.Axis;
+//import javafx.scene.chart.Axis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.image.WritableImage;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import org.jCharts.axisChart.axis.XAxis;
-import org.w3c.dom.css.Rect;
+//import org.jCharts.axisChart.axis.XAxis;
+//import org.w3c.dom.css.Rect;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
+//import java.awt.*;
 import java.io.*;
-import java.lang.reflect.Array;
+//import java.lang.reflect.Array;
 import java.util.*;
 
 
@@ -28,8 +28,8 @@ public class ChartDrawing extends Application {
 
 
     @Override public void start(Stage stage) {
-        typeSetup = "non-clustered/segmenting-routing-fewer-shards-manual-refresh";
-        filePrefix = "1536238123962.csv";
+        //typeSetup = "non-clustered/segmenting-routing-fewer-shards-manual-refresh";
+        //filePrefix = "1536238123962.csv";
         drawGraphFunction(stage);
         System.exit(1);
     }
@@ -230,7 +230,7 @@ public class ChartDrawing extends Application {
                 yAxisUpper = 200;
                 yAxis.setTickUnit(10);
             } else if(endpoint.equals("/patient/activity")) {
-                yAxisUpper = 3000;
+                yAxisUpper = 15000;
                 yAxis.setTickUnit(150);
             } else if(endpoint.equals("/patient/plan/next")) {
                 yAxisUpper = 10000;
@@ -246,7 +246,7 @@ public class ChartDrawing extends Application {
 
 
             if(doAverageCalculation) {
-                endpoint += " average";
+                //endpoint += " average";
                 lineChart.getData().add(averageSeries);
             }
 

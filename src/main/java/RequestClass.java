@@ -23,7 +23,7 @@ public class RequestClass {
     private String password = "changeme";
     private String client = "my-trusted-client";
     private String secret = "secret";
-    private String host = "localhost";
+    private String host = Start.queryUrl;
     private String http = "https://";
     private String scope = "read+trust+write";
     private String grantType = "password";
@@ -92,7 +92,7 @@ public class RequestClass {
     }
 
     public void postActivity(int activityId, Date nowDate) throws JSONException {
-        System.out.println("Post activity on user " + username);
+        //System.out.println("Post activity on user " + username);
         Date start = (Date) nowDate.clone();
         String type = (int) activityPlan.get(activityId) == 0 ? "sleeping" : "walking";
         start.setHours(activityId);
@@ -165,8 +165,9 @@ public class RequestClass {
             int setDuration = (int) (Math.floor(Math.random() * (Math.abs((int) thisObject.get("set_duration_s") + 20))) + 1);
             thisToAdd.put("randomsetduration", setDuration);
             thisToAdd.put("setduration", (int) thisObject.get("set_duration_s"));
-            Date d = (new Date(pdate + (length - 345600000)));
-            d.setHours(12 + (i * (10 / numberExercises)));
+            Date d = (new Date(pdate + (length / 2)));
+            //d.setHours(12 + (i * (10 / numberExercises)));
+            System.out.println("Mid of plans-length and such " + d.getTime());
             thisToAdd.put("performed", d.getTime());
 
             boolean skippedExercise = (Math.floor(Math.random() * 8) + 1) == 2;
@@ -314,7 +315,8 @@ public class RequestClass {
         System.out.println("Posting exercises for user " + username);
         postRequest(getConnection("POST", exercisePath, true, true, false), exercisePlan.toString(), exercisePath);
         System.out.println("Posted exercises for user " + username);
-        this.exercisePlan = new JSONArray();
+        this.exercisePlan = new JSONArray(new ArrayList<String>());
+        exercisePlan = new JSONArray(new ArrayList<String>());
     }
 
     public void getAchievements() {
@@ -368,10 +370,14 @@ public class RequestClass {
         writeInRequest(connection, s);
 
         boolean wait = waitForPosts;
-        String jsonString = getResponse(connection, wait, true, s, path);
+        String jsonString = getResponse(connection, wait, false, s, path);
         Date end = new Date();
         //printTook((wait ? end.getTime() - 1005 : end.getTime()) - start.getTime(), path, jsonString);
         printTook((end.getTime()) - start.getTime(), path, jsonString);
+
+        // Get achievements and totals after all posts for good measure
+        getAchievements();
+        getTotals();
     }
 
     private void getGeneric(String path) {

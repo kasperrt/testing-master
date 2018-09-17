@@ -15,18 +15,49 @@ import java.util.concurrent.TimeUnit;
 
 public class Start {
 
-    private static int THREADS = 1;
-    private static int USERNUMBER = 1;
+    private static int THREADS = 20;
+    private static int USERNUMBER = 20;
     private static int doneRemoval = 0;
     public static String thisFile;
-    private static int MAXWEEKS = 1;
+    private static int MAXWEEKS = 3;
     private static boolean different_start = false;
     public static String typeSetup = "clustered/manual-refresh";
     private static boolean segmenting = typeSetup.contains("segmenting");
     public static boolean manualRefresh = typeSetup.contains("manual-refresh");
     static ArrayList<RequestClass> elementLists = new ArrayList<>();
     private static long lastEndDate = 0L;
+    public static final String queryUrl = "10.53.43.122";
+    private static long planLength = 0L;
 
+
+    private static void disableSSL() {
+        try {
+            TrustManager[] trustAllCerts = new TrustManager[] {
+                    new X509TrustManager() {
+                        public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                            return null;
+                        }
+                        public void checkClientTrusted(X509Certificate[] certs, String authType) {
+                        }
+                        public void checkServerTrusted(X509Certificate[] certs, String authType) {
+                        }
+                    }
+            };
+
+            // Install the all-trusting trust manager
+            SSLContext sc = SSLContext.getInstance("SSL");
+            sc.init(null, trustAllCerts, new java.security.SecureRandom());
+            HostnameVerifier allHostsValid = new HostnameVerifier() {
+                public boolean verify(String hostname, SSLSession session) {
+                    return true;
+                }
+            };
+            HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
+            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public static void main(String[] args) throws KeyManagementException, NoSuchAlgorithmException {
         if(different_start) {
@@ -39,22 +70,9 @@ public class Start {
         System.out.println("Manual-refresh: " + manualRefresh);
         System.out.println("Type run: " + typeSetup);
 
-        TrustManager[] trustAllCerts = new TrustManager[] {
-            new X509TrustManager() {
-                public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-                    return null;
-                }
-                public void checkClientTrusted(X509Certificate[] certs, String authType) {
-                }
-                public void checkServerTrusted(X509Certificate[] certs, String authType) {
-                }
-            }
-        };
         Date startTesting = new Date();
-        // Install the all-trusting trust manager
-        SSLContext sc = SSLContext.getInstance("SSL");
-        sc.init(null, trustAllCerts, new java.security.SecureRandom());
-        HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+
+        disableSSL();
 
         long date = (new Date()).getTime();
         thisFile = date + ".csv";
@@ -67,7 +85,7 @@ public class Start {
         thisDate = c.getTime();
         System.out.println(thisDate.getTime());
         thisDate.setTime(thisDate.getTime() - 31556926000L);
-        thisDate.setHours(0);
+        thisDate.setHours(2);
         thisDate.setMinutes(0);
         thisDate.setSeconds(0);
 
@@ -98,8 +116,8 @@ public class Start {
             Date endTesting = new Date();
             System.out.println("Whole testing took: " + ((endTesting.getTime() - startTesting.getTime()) / 1000) + " seconds.");
 
-            //ChartDrawing chart = new ChartDrawing();
-            //chart.startDrawing();
+            ChartDrawing chart = new ChartDrawing();
+            chart.startDrawing();
             System.out.println("Start ChartDrawing with id " + date);
             System.exit(1);
 
@@ -115,7 +133,7 @@ public class Start {
 
     private static void postForceMerge() {
         try {
-            URL url = new URL("http://localhost:9200/data_description/_forcemerge?only_expunge_deletes=false&max_num_segments=1&flush=true");
+            URL url = new URL("http://" + queryUrl + ":9200/data_description/_forcemerge?only_expunge_deletes=false&max_num_segments=1&flush=true");
 
             String auth = Base64.getEncoder().encodeToString(("elastic:changeme").getBytes());
 
@@ -139,7 +157,7 @@ public class Start {
     private static void setAppClock(Date nowDate) {
         URL url = null;
         try {
-            url = new URL("https://localhost/clock/" + nowDate.getTime());
+            url = new URL("https://" + queryUrl + "/clock/" + nowDate.getTime());
             HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
             connection.setDoOutput(true);
             connection.setRequestMethod("GET");
@@ -377,6 +395,7 @@ public class Start {
         }
         if(_nextDay > 6) {
             getTailoring(thisDate);
+            setAppClock(thisDate);
             if(week == MAXWEEKS && doneRemoval != 2 && different_start) {
                 doneRemoval += 1;
                 System.out.println("Size of elementlist " + elementLists.size());
