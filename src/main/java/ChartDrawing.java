@@ -26,8 +26,10 @@ public class ChartDrawing extends Application {
     private boolean doAverageCalculation = false;
     private String typeSetup = Start.typeSetup;
 
-    @Override public void start(Stage stage) {
 
+    @Override public void start(Stage stage) {
+        typeSetup = "non-clustered/segmenting-routing-fewer-shards-manual-refresh";
+        filePrefix = "1536238123962.csv";
         drawGraphFunction(stage);
         System.exit(1);
     }
@@ -112,7 +114,7 @@ public class ChartDrawing extends Application {
 
             stage.setTitle(endpoint + " - " + typeSetup);
             //defining the axes
-
+            ArrayList<Long> arrayListResults = new ArrayList<>();
             double range = minMaxNumbers.get(endpoint).get("max") - minMaxNumbers.get(endpoint).get("min");
             int tickCount = 50;
             double unroundedTickSize = range/(tickCount-1);
@@ -161,7 +163,7 @@ public class ChartDrawing extends Application {
                     if(averageResults.size() < i + 1) {
                         averageResults.add(new ArrayList<Long>());
                     }
-
+                    arrayListResults.add(endpoints.get(endpoint).get(user).get("y").get(i));
                     Long responseTime = endpoints.get(endpoint).get(user).get("y").get(i);
                     Long epochTime = endpoints.get(endpoint).get(user).get("x").get(i);
 
@@ -184,6 +186,12 @@ public class ChartDrawing extends Application {
                 }
                 if(!doAverageCalculation) lineChart.getData().add(series);
             }
+
+            int thisAverage = 0;
+            for(int i = 0; i < arrayListResults.size(); i++) {
+                thisAverage += arrayListResults.get(i);
+            }
+            System.out.println("Average for " + endpoint + " is " + (thisAverage / arrayListResults.size()));
 
 
             for(int i = 0; i < averageResults.size(); i++) {
