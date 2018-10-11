@@ -4,6 +4,7 @@ import org.json.JSONObject;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.*;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -24,7 +25,7 @@ public class RequestClass {
     private String client = "my-trusted-client";
     private String secret = "secret";
     private String host = Start.queryUrl;
-    private String http = "https://";
+    private String http = Start.http;
     private String scope = "read+trust+write";
     private String grantType = "password";
     private String[] skipArray = {"easy", "hard", "pain", "unclear"};
@@ -78,7 +79,7 @@ public class RequestClass {
         System.out.println("Creating user " + username);
         Date start = new Date();
         getAdminAccessToken();
-        HttpsURLConnection connection = getConnection("POST", createUserPath + username, true, true, false);
+        HttpURLConnection connection = getConnection("POST", createUserPath + username, true, true, false);
 
         connection.setRequestProperty( "Content-Type", "application/json");
         writeInRequest(connection, createUserValues);
@@ -118,7 +119,7 @@ public class RequestClass {
     public ArrayList<Long> postNewPlan(long dateTime) throws JSONException {
         Date start = new Date();
         System.out.println("Start new plan for user " + username);
-        HttpsURLConnection connection = getConnection("POST", planNextPath, true, true, false);
+        HttpURLConnection connection = getConnection("POST", planNextPath, true, true, false);
 
         String sendString = "";
         if(this.questions.length() != 0) {
@@ -140,7 +141,7 @@ public class RequestClass {
         boolean wait = waitForPosts;
         String jsonString = getResponse(connection, wait, false, sendString, planNextPath);
 
-        HttpsURLConnection conn = getConnection("GET", currentPlanPath, false, true, false);
+        HttpURLConnection conn = getConnection("GET", currentPlanPath, false, true, false);
         String currentPlan = getResponse(conn, true, false, "", currentPlanPath);
         JSONObject currentPlanParsed = new JSONObject(currentPlan);
         System.out.println("New plan " + currentPlanParsed.toString());
@@ -256,7 +257,7 @@ public class RequestClass {
         System.out.println("Getting tailoring questions for user " + username);
         TimeUnit.MILLISECONDS.sleep(1005);
         Date start = new Date();
-        HttpsURLConnection connection = getConnection("GET", tailoringPath, false, true, false);
+        HttpURLConnection connection = getConnection("GET", tailoringPath, false, true, false);
 
         boolean wait = false;
         String returnString = getResponse(connection, wait, false, "", tailoringPath);
@@ -330,11 +331,11 @@ public class RequestClass {
         //if(tokenType.equals("") || accessToken.equals("")) getAccessToken();
         getAdminAccessToken();
         Date start = new Date();
-        HttpsURLConnection connection1 = getConnection("GET", "/init/reset_static", false, true, false);
+        HttpURLConnection connection1 = getConnection("GET", "/init/reset_static", false, true, false);
 
 
         String jsonString1 = getResponse(connection1, false, false, "", resetPath);
-        HttpsURLConnection connection2 = getConnection("GET", resetPath, false, true, false);
+        HttpURLConnection connection2 = getConnection("GET", resetPath, false, true, false);
 
 
         String jsonString2 = getResponse(connection2, false, false, "", resetPath);
@@ -362,9 +363,9 @@ public class RequestClass {
         }
     }
 
-    private void postRequest(HttpsURLConnection post, String s, String path) { ;
+    private void postRequest(HttpURLConnection post, String s, String path) { ;
         Date start = new Date();
-        HttpsURLConnection connection = post;
+        HttpURLConnection connection = post;
         connection.setRequestProperty("Content-Type", "application/json");
 
         writeInRequest(connection, s);
@@ -382,7 +383,7 @@ public class RequestClass {
 
     private void getGeneric(String path) {
         Date start = new Date();
-        HttpsURLConnection connection = getConnection("GET", path, false, true, false);
+        HttpURLConnection connection = getConnection("GET", path, false, true, false);
         boolean wait = false;
         String returnString = getResponse(connection, wait, false, "", path);
         Date end = new Date();
@@ -407,7 +408,7 @@ public class RequestClass {
                             "password=changeme";
             byte[] postData = urlParameters.getBytes(StandardCharsets.UTF_8);
             Date start = new Date();
-            HttpsURLConnection connection = getConnection("POST", oauthPath, false, true, true);
+            HttpURLConnection connection = getConnection("POST", oauthPath, false, true, true);
 
             connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             connection.setUseCaches(false);
@@ -442,7 +443,7 @@ public class RequestClass {
                             "password=" + password;
             byte[] postData = urlParameters.getBytes(StandardCharsets.UTF_8);
             Date start = new Date();
-            HttpsURLConnection connection = getConnection("POST", oauthPath, false, true, true);
+            HttpURLConnection connection = getConnection("POST", oauthPath, false, true, true);
 
             connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             connection.setUseCaches(false);
@@ -467,7 +468,7 @@ public class RequestClass {
         }
     }
 
-    private void writeInRequest(HttpsURLConnection connection, String s) {
+    private void writeInRequest(HttpURLConnection connection, String s) {
         try {
             connection.setRequestProperty("Content-Length", Integer.toString(s.getBytes().length));
             DataOutputStream dataoutput = new DataOutputStream(connection.getOutputStream());
@@ -478,7 +479,7 @@ public class RequestClass {
         }
     }
 
-    private String getResponse(HttpsURLConnection connection, boolean wait, boolean achievement, String request, String path) {
+    private String getResponse(HttpURLConnection connection, boolean wait, boolean achievement, String request, String path) {
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
             StringBuilder jsonString = new StringBuilder();
@@ -525,10 +526,10 @@ public class RequestClass {
         return null;
     }
 
-    private HttpsURLConnection getConnection(String type, String path, boolean input, boolean output, boolean basic) {
+    private HttpURLConnection getConnection(String type, String path, boolean input, boolean output, boolean basic) {
         try {
             URL url = new URL(http + host + path);
-            HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestProperty("Authorization", tokenType + " " + accessToken);
 
             if (basic) {
