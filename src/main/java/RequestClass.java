@@ -164,6 +164,7 @@ public class RequestClass {
             thisToAdd.put("sets", (int) thisObject.get("sets"));
             thisToAdd.put("reps", (int) thisObject.get("reps"));
             int setDuration = (int) (Math.floor(Math.random() * (Math.abs((int) thisObject.get("set_duration_s") + 20))) + 1);
+            if(setDuration == 20) setDuration -= 1;
             thisToAdd.put("randomsetduration", setDuration);
             thisToAdd.put("setduration", (int) thisObject.get("set_duration_s"));
             Date d = (new Date(pdate + (length / 2)));

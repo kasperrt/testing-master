@@ -14,13 +14,13 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 public class Start {
-    private static int THREADS = 60;
-    private static int USERNUMBER = 60;
+    private static int THREADS = 8;
+    private static int USERNUMBER = 8;
     private static int doneRemoval = 0;
     public static String thisFile;
     private static int MAXWEEKS = 3;
     private static boolean different_start = false;
-    public static String typeSetup = "clustered/20-regular";
+    public static String typeSetup = "clustered/segmenting-manual-refresh";
     private static boolean segmenting = typeSetup.contains("segmenting");
     public static boolean manualRefresh = typeSetup.contains("manual-refresh");
     static ArrayList<RequestClass> elementLists = new ArrayList<>();
@@ -28,7 +28,9 @@ public class Start {
     public static String http = "http://";
     public static boolean secure = http.contains("s");
     private static final String port = ":8887";
-    public static final String queryUrl = "samuel01.idi.ntnu.no" + port;
+    //public static final String _url = "samuel01.idi.ntnu.no";
+    public static final String _url = "10.53.43.122";
+    public static final String queryUrl = _url + port;
     private static long planLength = 0L;
 
 
@@ -100,7 +102,7 @@ public class Start {
                 System.out.println("Got an error while creating user. Trying with a reset");
             }
             firstReset.resetElastic();
-            System.out.println("Reset, waiting 60 seconds");
+            System.out.println("Reset, waiting 20 seconds");
             wait(20000, true);
 
             if(segmenting) {
@@ -139,7 +141,7 @@ public class Start {
 
     private static void postForceMerge() {
         try {
-            URL url = new URL("http://" + queryUrl + ":9200/data_description/_forcemerge?only_expunge_deletes=false&max_num_segments=1&flush=true");
+            URL url = new URL("http://" + _url + ":9200/data_description/_forcemerge?only_expunge_deletes=false&max_num_segments=1&flush=true");
 
             String auth = Base64.getEncoder().encodeToString(("elastic:changeme").getBytes());
 
