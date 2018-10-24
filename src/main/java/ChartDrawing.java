@@ -21,10 +21,17 @@ import java.util.*;
 public class ChartDrawing extends Application {
 
 
-    public static String filePrefix = Start.thisFile;
+    //public static String filePrefix = Start.thisFile;
     private boolean epochXNumbering = false;
     private boolean doAverageCalculation = false;
     private String typeSetup = Start.typeSetup;
+    private static boolean mongo = false;
+    private static boolean mongoPrefix = false;
+    private static int threadNumbers = 60;
+    private static String folderPostFix = mongoPrefix ? " mongodb activity-achievement" : "";
+    private static String folderPrefix = threadNumbers + "-threads" + folderPostFix + "/";
+    public static String filePrefix = mongo ? "1537352827949.csv" : Start.thisFile;
+    private static String mongodbText = mongo && mongoPrefix ? " - MongoDB - " + threadNumbers + " threads" : mongo ? " - " + threadNumbers + " threads" : "";
 
 
     @Override public void start(Stage stage) {
@@ -50,8 +57,11 @@ public class ChartDrawing extends Application {
 
 
         try {
-
-            br = new BufferedReader(new FileReader("runs/valid/" + typeSetup + "/" + csvFile));
+            if(mongo) {
+                br = new BufferedReader(new FileReader( folderPrefix + csvFile));
+            } else {
+                br = new BufferedReader(new FileReader("runs/valid/" + typeSetup + "/" + csvFile));
+            }
             while ((line = br.readLine()) != null) {
 
                 // use comma as separator
@@ -112,7 +122,7 @@ public class ChartDrawing extends Application {
 
         for(String endpoint : endpoints.keySet()) {
 
-            stage.setTitle(endpoint + " - " + typeSetup);
+            stage.setTitle(endpoint + " - " + typeSetup + mongodbText);
             //defining the axes
             ArrayList<Long> arrayListResults = new ArrayList<>();
             double range = minMaxNumbers.get(endpoint).get("max") - minMaxNumbers.get(endpoint).get("min");
@@ -139,7 +149,7 @@ public class ChartDrawing extends Application {
             LineChart<Number, Number> lineChart =
                     new LineChart<Number, Number>(xAxis, yAxis);
 
-            lineChart.setTitle(endpoint + " - " + typeSetup);
+            lineChart.setTitle(endpoint + " - " + typeSetup + mongodbText);
             lineChart.getStyleClass().add("thick-chart");
             //defining a series
             //System.out.println(endpoint);
@@ -225,23 +235,25 @@ public class ChartDrawing extends Application {
             }
 
             double yAxisUpper = 10000;
-
+            yAxisUpper = 10000;
+            yAxis.setTickUnit(150);
             if(endpoint.equals("/patient/achievements") || endpoint.equals("/patient/totals")) {
                 yAxisUpper = 200;
                 yAxis.setTickUnit(10);
             } else if(endpoint.equals("/patient/activity")) {
-                yAxisUpper = 15000;
+                yAxisUpper = 3500;
                 yAxis.setTickUnit(150);
-            } else if(endpoint.equals("/patient/plan/next")) {
+            } /*else if(endpoint.equals("/patient/plan/next")) {
                 yAxisUpper = 10000;
                 yAxis.setTickUnit(500);
-            } else if(endpoint.equals("/patient/plan/tailoring") || endpoint.equals("/patient/plan/updateuser/exercise")) {
+            }*/ else if(endpoint.equals("/patient/plan/tailoring") || endpoint.equals("/patient/plan/updateuser/exercise")) {
                 yAxisUpper = 2500;
                 yAxis.setTickUnit(125);
             } else if(endpoint.equals("/patient/plan/updateuser/education")) {
                 yAxisUpper = 1500;
                 yAxis.setTickUnit(75);
             }
+
             yAxis.setUpperBound(yAxisUpper);
 
 
@@ -256,7 +268,12 @@ public class ChartDrawing extends Application {
             endpoint = endpoint.substring(1);
 
             stage.setScene(scene);
-            String graphName = "graphs/" + typeSetup + "/" + endpoint.replace("/", "-");
+            String graphName = "";
+            if(mongo) {
+                graphName = folderPrefix + endpoint.replace("/", "-");
+            } else {
+                graphName = "graphs/" + typeSetup + "/" + endpoint.replace("/", "-");
+            }
             if(doAverageCalculation) graphName += "-average";
 
             saveAsPng(scene, graphName + ".png");

@@ -14,19 +14,23 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 public class Start {
-
-    private static int THREADS = 20;
-    private static int USERNUMBER = 20;
+    private static int THREADS = 8;
+    private static int USERNUMBER = 8;
     private static int doneRemoval = 0;
     public static String thisFile;
     private static int MAXWEEKS = 3;
     private static boolean different_start = false;
-    public static String typeSetup = "clustered/manual-refresh";
+    public static String typeSetup = "clustered/segmenting-manual-refresh";
     private static boolean segmenting = typeSetup.contains("segmenting");
     public static boolean manualRefresh = typeSetup.contains("manual-refresh");
     static ArrayList<RequestClass> elementLists = new ArrayList<>();
     private static long lastEndDate = 0L;
-    public static final String queryUrl = "10.53.43.122";
+    public static String http = "http://";
+    public static boolean secure = http.contains("s");
+    private static final String port = ":8887";
+    //public static final String _url = "samuel01.idi.ntnu.no";
+    public static final String _url = "10.53.43.122";
+    public static final String queryUrl = _url + port;
     private static long planLength = 0L;
 
 
@@ -92,7 +96,11 @@ public class Start {
         setAppClock(thisDate);
 
         try {
-            firstReset.createUser();
+            try {
+                firstReset.createUser();
+            } catch(Exception e) {
+                System.out.println("Got an error while creating user. Trying with a reset");
+            }
             firstReset.resetElastic();
             System.out.println("Reset, waiting 20 seconds");
             wait(20000, true);
@@ -116,9 +124,9 @@ public class Start {
             Date endTesting = new Date();
             System.out.println("Whole testing took: " + ((endTesting.getTime() - startTesting.getTime()) / 1000) + " seconds.");
 
-            ChartDrawing chart = new ChartDrawing();
+            /*ChartDrawing chart = new ChartDrawing();
             chart.startDrawing();
-            System.out.println("Start ChartDrawing with id " + date);
+            System.out.println("Start ChartDrawing with id " + date);*/
             System.exit(1);
 
         } catch (InterruptedException e) {
@@ -133,7 +141,7 @@ public class Start {
 
     private static void postForceMerge() {
         try {
-            URL url = new URL("http://" + queryUrl + ":9200/data_description/_forcemerge?only_expunge_deletes=false&max_num_segments=1&flush=true");
+            URL url = new URL("http://" + _url + ":9200/data_description/_forcemerge?only_expunge_deletes=false&max_num_segments=1&flush=true");
 
             String auth = Base64.getEncoder().encodeToString(("elastic:changeme").getBytes());
 
@@ -157,8 +165,8 @@ public class Start {
     private static void setAppClock(Date nowDate) {
         URL url = null;
         try {
-            url = new URL("https://" + queryUrl + "/clock/" + nowDate.getTime());
-            HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+            url = new URL(http + queryUrl + "/clock/" + nowDate.getTime());
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setDoOutput(true);
             connection.setRequestMethod("GET");
             connection.setUseCaches(false);
@@ -229,8 +237,12 @@ public class Start {
         try {
             executorService.invokeAll(tasks);
             for(int i = 0; i < endDates.size(); i++) {
-                if(endDates.get(i) > lastEndDate) {
-                    lastEndDate = endDates.get(i);
+                try {
+                    if (endDates.get(i) > lastEndDate) {
+                        lastEndDate = endDates.get(i);
+                    }
+                } catch(NullPointerException e) {
+                    System.err.println("This is an nullpointerexception at fetching new plans");
                 }
             }
             executorService.shutdown();
